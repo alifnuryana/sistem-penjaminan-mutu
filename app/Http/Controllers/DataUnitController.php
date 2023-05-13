@@ -12,14 +12,21 @@ class DataUnitController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $units = Unit::with([
-            'unitable',
-        ])->paginate(10);
+        $units = Unit::query()
+            ->when($request->input('keyword'), function ($query, $keyword) {
+                $keyword = ucwords($keyword);
+                return $query->where('name', 'like', "%{$keyword}%");
+            })
+            ->with([
+                'unitable',
+            ])->paginate(10)
+            ->withQueryString();
 
         return Inertia::render('Data/Unit/Index', [
             'units' => UnitResource::collection($units),
+            'keyword' => $request->input('keyword'),
         ]);
     }
 

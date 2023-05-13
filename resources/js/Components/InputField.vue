@@ -4,6 +4,7 @@
                :class="inputClass"
                :value="modelValue"
                @input="$emit('update:modelValue', $event.target.value)"
+               :placeholder="placeholder"
                required :aria-describedby="`${id}-error`">
         <div
             :class="validationClass">
@@ -37,6 +38,10 @@ const props = defineProps({
     error: {
         type: Boolean,
         default: false,
+    },
+    placeholder: {
+        type: String,
+        default: '',
     }
 });
 
