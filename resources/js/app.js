@@ -1,6 +1,7 @@
 import './bootstrap';
 import '../css/app.css';
-import('preline');
+
+import('preline')
 
 import {createApp, h} from 'vue';
 import {createInertiaApp} from '@inertiajs/vue3';
@@ -15,10 +16,11 @@ createInertiaApp({
     setup({el, App, props, plugin}) {
         return createApp({render: () => h(App, props)})
             .use(plugin)
-            .use(ZiggyVue)
+            .use(ZiggyVue, Ziggy)
             .mount(el);
     },
     progress: {
         color: '#4B5563',
+        showSpinner: true,
     },
 });
