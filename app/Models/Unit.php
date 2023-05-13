@@ -19,7 +19,7 @@ class Unit extends Model
         'unitable_type',
     ];
 
-    public function unitable() : MorphTo
+    public function unitable(): MorphTo
     {
         return $this->morphTo();
     }

@@ -16,12 +16,12 @@ class University extends Model
         'address',
     ];
 
-    public function unit() : MorphOne
+    public function unit(): MorphOne
     {
         return $this->morphOne(Unit::class, 'unitable');
     }
 
-    public function studyPrograms() : HasMany
+    public function studyPrograms(): HasMany
     {
         return $this->hasMany(StudyProgram::class);
     }

@@ -17,12 +17,12 @@ class StudyProgram extends Model
         'university_id',
     ];
 
-    public function unit() : MorphOne
+    public function unit(): MorphOne
     {
         return $this->morphOne(Unit::class, 'unitable');
     }
 
-    public function university() : BelongsTo
+    public function university(): BelongsTo
     {
         return $this->belongsTo(University::class);
     }
