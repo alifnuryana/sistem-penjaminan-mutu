@@ -9,15 +9,14 @@ class StudyProgramResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
-     *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request): array
+    public function toArray(Request $request) : array
     {
         return [
             'id' => $this->id,
             'degree' => $this->degree,
-            'university_id' => $this->university_id,
+            'university' => $this->whenLoaded('university', fn () => UniversityResource::make($this->university)),
         ];
     }
 }
