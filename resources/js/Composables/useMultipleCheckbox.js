@@ -1,24 +1,24 @@
 import {ref, watch} from "vue";
 
 export function useMultipleCheckbox(data) {
-    const checkedAll = ref(false);
-    const checked = ref([]);
+    const isCheckedAll = ref(false);
+    const checkedData = ref([]);
 
-    watch(checked, function () {
-        if (checked.value.length === data.length) {
-            checkedAll.value = true;
+    watch(checkedData, function () {
+        if (checkedData.value.length === data.length) {
+            isCheckedAll.value = true;
         } else {
-            checkedAll.value = false;
+            isCheckedAll.value = false;
         }
     });
 
     function checkAll() {
-        if (checkedAll.value) {
-            checked.value = data.map((item) => item.id);
+        if (isCheckedAll.value) {
+            checkedData.value = data.map((item) => item.id);
         } else {
-            checked.value = [];
+            checkedData.value = [];
         }
     }
 
-    return {checkedAll, checked, checkAll};
+    return {isCheckedAll, checkedData, checkAll};
 }
