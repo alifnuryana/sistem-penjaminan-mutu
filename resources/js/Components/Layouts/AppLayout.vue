@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-50 dark:bg-slate-900">
+    <div class="bg-gray-50 h-screen dark:bg-slate-900">
         <Head title="Dashboard"/>
         <!-- ========== HEADER ========== -->
         <Header/>
