@@ -16,6 +16,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@heroicons/vue": "^2.0.18",
         "@inertiajs/vue3": "^1.0.6",
         "preline": "^1.8.0",
         "vue": "^3.3.2"
