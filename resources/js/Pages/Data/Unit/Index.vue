@@ -29,7 +29,7 @@
                                                     leave-from-class="opacity-100"
                                                     leave-to-class="transform opacity-0"
                                         >
-                                            <button v-if="unitChecked.length >= 1" as="button"
+                                            <button v-if="checked.length >= 1" as="button"
                                                     @click="deleteCheckedUnit"
                                                     class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                                             >
@@ -105,7 +105,7 @@
                                                        class="shrink-0 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                                                        :id="`hs-at-with-checkboxes-${unit.id}`"
                                                        :value="unit.id"
-                                                       v-model="unitChecked"
+                                                       v-model="checked"
                                                 >
                                             </label>
                                         </div>
@@ -208,6 +208,7 @@ import AppLayout from "@/Components/Layouts/AppLayout.vue";
 import {CheckCircleIcon, ChevronRightIcon, ChevronLeftIcon} from "@heroicons/vue/24/solid/index.js";
 import {Link, router} from "@inertiajs/vue3";
 import {ref, watch} from "vue";
+import {useMultipleCheckbox} from "../../../Composables/useMultipleCheckbox.js";
 
 const props = defineProps({
     units: {
@@ -216,32 +217,16 @@ const props = defineProps({
     },
 });
 
-const checkedAll = ref(false);
-const unitChecked = ref([]);
+const {checked, checkAll, checkedAll} = useMultipleCheckbox(props.units.data);
 
-watch(unitChecked, function () {
-    if (unitChecked.value.length === props.units.data.length) {
-        checkedAll.value = true;
-    } else {
-        checkedAll.value = false;
-    }
-});
-
-function checkAll() {
-    if (checkedAll.value) {
-        unitChecked.value = props.units.data.map((unit) => unit.id);
-    } else {
-        unitChecked.value = [];
-    }
-}
 
 const deleteCheckedUnit = function () {
-    if (unitChecked.value.length > 0) {
-        console.log(unitChecked.value.join(','));
+    if (checked.value.length > 0) {
+        console.log(checked.value.join(','));
         if (confirm('Apakah anda yakin ingin menghapus unit yang dipilih?')) {
             router.visit(route('data.units.destroys'), {
                 data: {
-                    ids: unitChecked.value,
+                    ids: checked.value,
                 },
                 method: 'delete',
                 preserveScroll: true,
