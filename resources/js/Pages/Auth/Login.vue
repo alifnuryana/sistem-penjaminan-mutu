@@ -6,6 +6,7 @@
                 class="mt-7 bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-4 sm:p-7">
                     <div class="text-center">
+                        <img :src="FingerPrintBro" alt="FingerPrintBro" class="w-52 mx-auto">
                         <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Login</h1>
                         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
                             Belum memiliki akun?
@@ -68,6 +69,7 @@ import InputField from "@/Components/InputField.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import InputError from "@/Components/InputError.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import FingerPrintBro from "@assets/images/fingerprint-bro.png";
 
 const form = useForm({
     email: '',
