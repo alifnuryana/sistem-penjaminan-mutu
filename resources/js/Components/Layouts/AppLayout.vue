@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-gray-50 h-screen dark:bg-slate-900">
+    <div class="bg-gray-50 min-h-screen dark:bg-slate-900">
         <Head :title="title"/>
         <!-- ========== HEADER ========== -->
         <Header/>
