@@ -5,6 +5,7 @@
                :value="modelValue"
                @input="$emit('update:modelValue', $event.target.value)"
                :placeholder="placeholder"
+               :readonly="readonly"
                required :aria-describedby="`${id}-error`">
         <div
             :class="validationClass">
@@ -42,13 +43,18 @@ const props = defineProps({
     placeholder: {
         type: String,
         default: '',
-    }
+    },
+    readonly: {
+        type: Boolean,
+        default: false,
+    },
 });
 
 const inputClass = reactive({
     'py-3 px-4 block w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400': true,
     'border-gray-200 focus:border-blue-500 focus:ring-blue-500': !props.error,
     'border-red-500 focus:border-red-500 focus:ring-red-500': props.error,
+    'opacity-70 pointer-events-none': props.readonly,
 });
 
 const validationClass = reactive({
