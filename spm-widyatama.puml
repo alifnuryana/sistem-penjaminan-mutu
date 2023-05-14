@@ -70,7 +70,9 @@ entity Document {
     * name : String (100)
     * file_path : String (100)
     size : Integer
-    * type : Enum ("SK", "Akreditasi")
+    * release_date: Date
+    validity_date : Date
+    * type : Enum ("Pendirian", "Akreditasi")
     * documentable_type : String (100)
     * createdAt : Timestamp <<generated>>
     * updatedAt : Timestamp <<generated>>
