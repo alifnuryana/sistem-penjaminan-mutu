@@ -122,6 +122,7 @@
                                             <span
                                                 class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                                                 <CheckCircleIcon class="w-4 h-4"/>
+                                                <!--TODO: lakukan cek apakah unit tersebut memiliki akreditasi yang aktif atau tidak -->
                                                 Aktif
                                             </span>
                                             </div>
