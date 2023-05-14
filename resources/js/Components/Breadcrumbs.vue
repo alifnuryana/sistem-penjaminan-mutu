@@ -1,4 +1,5 @@
 <template>
+    <!-- TODO : terdapat bug, megenerate dua kali di halaman dashboard cek SharedData pada inertia -->
     <ol class="flex items-center whitespace-nowrap min-w-0 mb-5" aria-label="Breadcrumb">
         <li class="text-sm" v-for="(item, index) in breadcrumbs" :key="item">
             <Link as="button" class="flex items-center text-gray-500 hover:text-blue-600" :href="item['link']">
