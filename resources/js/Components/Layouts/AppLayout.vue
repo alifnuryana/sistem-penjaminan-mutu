@@ -18,7 +18,7 @@
                 <!-- End Navigation Toggle -->
 
                 <!-- Breadcrumb -->
-                <Breadcrumb/>
+                <MobileBreadcrumbs/>
                 <!-- End Breadcrumb -->
             </div>
         </div>
@@ -30,6 +30,7 @@
 
         <!-- Content -->
         <div class="w-full py-10 px-4 sm:px-6 md:px-8 lg:pl-72">
+            <Breadcrumbs class="hidden lg:flex"/>
             <slot/>
         </div>
         <!-- End Content -->
@@ -41,8 +42,9 @@
 import {Head} from "@inertiajs/vue3";
 import Header from "./Partials/Header.vue";
 import Sidebar from "./Partials/Sidebar.vue";
-import Breadcrumb from "../Breadcrumb.vue";
+import MobileBreadcrumbs from "../MobileBreadcrumbs.vue";
 import {Bars3Icon} from "@heroicons/vue/24/outline/index.js";
+import Breadcrumbs from "../Breadcrumbs.vue";
 
 defineProps({
     title: {
