@@ -1,0 +1,93 @@
+@startuml
+
+entity User {
+    * id : UUID <<generated>> <<PK>>
+    ---
+    * name : String
+    * email : String <<unique>>
+    * password : String
+    * createdAt : Timestamp <<generated>>
+    * updatedAt : Timestamp <<generated>>
+}
+
+entity Unit {
+    * id : UUID <<generated>> <<PK>>
+    ---
+    * code: String (10) <<unique>>
+    * name : String (100)
+    * email : String (100) <<unique>>
+    * unitable_type : String (100)
+    * createdAt : Timestamp <<generated>>
+    * updatedAt : Timestamp <<generated>>
+    ---
+    * unitable_id : UUID <<FK>>
+}
+
+entity Major {
+    * id : UUID <<generated>> <<PK>>
+    ---
+    * degree : Enum (D3, D4, S1, S2, S3)
+    * createdAt : Timestamp <<generated>>
+    * updatedAt : Timestamp <<generated>>
+    ---
+    * university_id: UUID <<FK>>
+}
+
+entity University {
+     * id : UUID <<generated>> <<PK>>
+    ---
+    address : Text
+}
+
+entity Accreditation {
+    * id : UUID <<generated>> <<PK>>
+    ---
+    * number : String <<unique>>
+    * grade : Enum ("A", "B", "C", "D", "E", "Unggul", "Baik", "Cukup", "Kurang")
+    * status: Enum ("Aktif", "Tidak Aktif")
+    * validity_date : Timestamp
+    * createdAt : Timestamp <<generated>>
+    * updatedAt : Timestamp <<generated>>
+    ---
+    * unit_id : UUID <<FK>>
+}
+
+entity Notification {
+    * id : UUID <<generated>> <<PK>>
+    ---
+    * due_date : Timestamp
+    * status: Enum ("Terkirim", "Tidak Terkirim", "Belum Terkirim")
+    * createdAt : Timestamp <<generated>>
+    * updatedAt : Timestamp <<generated>>
+    ---
+    * accreditation_id: UUID <<FK>>
+}
+
+entity Document {
+    * id : UUID <<generated>> <<PK>>
+    ---
+    * code : String (100)
+    * name : String (100)
+    * file_path : String (100)
+    size : Integer
+    * type : Enum ("SK", "Akreditasi")
+    * documentable_type : String (100)
+    * createdAt : Timestamp <<generated>>
+    * updatedAt : Timestamp <<generated>>
+    ---
+    * documentable_id : UUID <<FK>>
+}
+
+
+Major ||--|| Unit
+
+University ||--o{ Major
+University ||--|| Unit
+
+Accreditation ||--o{ Notification
+Accreditation }o--|| Unit
+
+Document |o--|| University
+Document |o--|| Major
+Document |o--|| Accreditation
+@enduml
