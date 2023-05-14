@@ -1,10 +1,9 @@
 <template>
-    <AppLayout title="Tambah Unit">
-        <!-- Card Section -->
+    <AppLayout title="Catat Akreditasi">
         <div class="max-w-5xl w-full">
             <!-- Card -->
             <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
-                <form @submit.prevent="submit">
+                <form @submit.prevent="">
                     <!-- Section -->
                     <div
                         class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
@@ -39,47 +38,52 @@
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <InputField id="name" name="name" type="text" :error="form.errors.name"
-                                        v-model="form.name"/>
-                            <InputError id="name" v-if="form.errors.name">
-                                {{ form.errors.name }}
+                            <select id="unit_id"
+                                    v-model="form.unit_id"
+                                    class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                <option selected></option>
+                                <option v-for="unit in units" :key="unit.id" :value="unit.id">
+                                    {{ unit.name }} - {{ unit.unitable.degree }}
+                                </option>
+                            </select>
+                            <InputError id="unit_id" v-if="form.errors.unit_id">
+                                {{ form.errors.unit_id }}
                             </InputError>
                         </div>
                         <!-- End Col -->
 
                         <div class="col-span-3">
-                            <InputLabel for="email" class="mt-3">
-                                Email Unit
+                            <InputLabel for="grade" class="mt-3">
+                                Hasil Akreditasi
                             </InputLabel>
                         </div>
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <InputField id="email" name="email" type="email" :error="form.errors.email"
-                                        v-model="form.email" placeholder="@widyatama.ac.id"/>
-                            <InputError id="email" v-if="form.errors.email">
-                                {{ form.errors.email }}
+                            <select id="grade"
+                                    v-model="form.grade"
+                                    class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                <option selected></option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                            <InputError id="grade" v-if="form.errors.grade">
+                                {{ form.errors.grade }}
                             </InputError>
                         </div>
                         <!-- End Col -->
 
                         <div class="col-span-3">
-                            <InputLabel for="degree" class="mt-3">Jenjang</InputLabel>
+                            <InputLabel for="due_date" class="mt-3">Masa Berlaku</InputLabel>
                         </div>
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <!-- TODO : jadikan select input sebagai komponen terpisah -->
-                            <select id="degree"
-                                    v-model="form.degree"
-                                    class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                                <option selected></option>
-                                <option value="D3">D3</option>
-                                <option value="D4">D4</option>
-                                <option value="S1">S1</option>
-                                <option value="S2">S2</option>
-                                <option value="S3">S3</option>
-                            </select>
+                            <!-- TODO : buat komponen baru untuk input tipe date biar bisa implementasi min and max date -->
+                            <InputField id="due_date" name="due_date" type="date" v-model="form.due_date"/>
                             <InputError id="degree" v-if="form.errors.degree">
                                 {{ form.errors.degree }}
                             </InputError>
@@ -99,7 +103,7 @@
                         <!-- End Col -->
 
                         <div class="col-span-3">
-                            <InputLabel for="decree" class="mt-3">SK Pendirian</InputLabel>
+                            <InputLabel for="decree" class="mt-3">SK Akreditasi</InputLabel>
                         </div>
                         <!-- End Col -->
 
@@ -139,7 +143,7 @@
 
                     <div class="flex w-full justify-end">
                         <PrimaryButton type="submit">
-                            Submit
+                            Catat
                         </PrimaryButton>
                     </div>
                 </form>
@@ -151,30 +155,30 @@
 </template>
 
 <script setup>
-import AppLayout from "../../../Components/Layouts/AppLayout.vue";
-import InputLabel from "../../../Components/InputLabel.vue";
-import InputField from "../../../Components/InputField.vue";
-import InputError from "../../../Components/InputError.vue";
-import PrimaryButton from "../../../Components/PrimaryButton.vue";
+import AppLayout from "../../Components/Layouts/AppLayout.vue";
+import PrimaryButton from "../../Components/PrimaryButton.vue";
+import InputLabel from "../../Components/InputLabel.vue";
+import InputError from "../../Components/InputError.vue";
+import InputField from "../../Components/InputField.vue";
 import {useForm} from "@inertiajs/vue3";
 
 const props = defineProps({
     code: {
         type: String,
         required: true,
+    },
+    units: {
+        type: Array,
+        required: true,
     }
-});
+})
 
 const form = useForm({
     code: props.code,
-    name: "",
-    email: "",
-    degree: "",
-    decree_number: "",
+    grade: "",
+    due_date: "",
+    unit_id: "",
     decree: "",
+    decree_number: "",
 });
-
-const submit = function () {
-    form.post(route('data.units.store'))
-};
 </script>

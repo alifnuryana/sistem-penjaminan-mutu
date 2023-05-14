@@ -17,7 +17,7 @@
                 </li>
 
                 <li>
-                    <Navlink href="#" :active="false">
+                    <Navlink :href="route('accreditations.index')" :active="route().current('accreditations.index')">
                         <DocumentIcon class="w-3.5 h-3.5"/>
                         Akreditasi
                     </Navlink>
