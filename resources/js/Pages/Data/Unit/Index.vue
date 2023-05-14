@@ -212,7 +212,7 @@
 import AppLayout from "@/Components/Layouts/AppLayout.vue";
 import {CheckCircleIcon, ChevronRightIcon, ChevronLeftIcon} from "@heroicons/vue/24/solid/index.js";
 import {Link, router} from "@inertiajs/vue3";
-import {useMultipleCheckbox} from "@/Composables/useMultipleCheckbox.js";
+import {useMultipleCheckbox} from "../../../Composables/useMultipleCheckbox.js";
 import {useSearchBox} from "../../../Composables/useSearchBox.js";
 import InputField from "../../../Components/InputField.vue";
 
