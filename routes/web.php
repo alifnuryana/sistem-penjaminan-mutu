@@ -26,6 +26,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('data')->as('data.')->group(function () {
         Route::delete('units/destroys', MultipleDeleteUnitController::class)->name('units.destroys');
-        Route::resource('units', DataUnitController::class)->only('index');
+        Route::resource('units', DataUnitController::class)->only('index', 'create', 'store');
     });
 });

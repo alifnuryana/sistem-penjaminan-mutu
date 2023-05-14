@@ -34,7 +34,7 @@
                                     </Transition>
                                     <Link as="button"
                                           class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                                          href="#">
+                                          :href="route('data.units.create')">
                                         <PlusIcon class="w-4 h-4"/>
                                         Tambahkan Unit
                                     </Link>
@@ -128,6 +128,7 @@
                                         </td>
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-1.5">
+                                                <!-- TODO : implementasikan halaman detail unit -->
                                                 <a class="inline-flex items-center gap-x-1.5 text-sm text-blue-600 decoration-2 hover:underline font-medium"
                                                    href="#">
                                                     Detail
@@ -154,7 +155,7 @@
 
 <script setup>
 import AppLayout from "@/Components/Layouts/AppLayout.vue";
-import {CheckCircleIcon, ChevronRightIcon, ChevronLeftIcon, PlusIcon} from "@heroicons/vue/24/solid/index.js";
+import {CheckCircleIcon, PlusIcon} from "@heroicons/vue/24/solid/index.js";
 import {Link, router} from "@inertiajs/vue3";
 import {useMultipleCheckbox} from "../../../Composables/useMultipleCheckbox.js";
 import {useSearchBox} from "../../../Composables/useSearchBox.js";

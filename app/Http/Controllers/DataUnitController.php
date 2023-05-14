@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUnitRequest;
 use App\Http\Resources\UnitResource;
+use App\Models\StudyProgram;
 use App\Models\Unit;
+use App\Models\University;
+use App\Services\UtilityService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class DataUnitController extends Controller
@@ -33,17 +38,32 @@ class DataUnitController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(UtilityService $utilityService)
     {
-        //
+        return Inertia::render('Data/Unit/Create', [
+            'code' => $utilityService->generateNewCode('UNT'),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreateUnitRequest $request)
     {
-        //
+        $file = $request->file('decree');
+        $name = $file->hashName();
+
+        // TODO : simpan juga file ke dalam database decree
+        $upload = Storage::put('decree', $file);
+
+        $studyProgram = StudyProgram::query()->create([
+            'degree' => $request->get('degree'),
+            'university_id' => University::first()->id,
+        ]);
+
+        $studyProgram->unit()->create($request->only('code', 'name', 'email'));
+
+        return redirect()->route('data.units.index')->with('success', 'Unit berhasil ditambahkan.');
     }
 
     /**
@@ -75,12 +95,5 @@ class DataUnitController extends Controller
      */
     public function destroy(Unit $units)
     {
-    }
-
-    public function destroys(Request $request)
-    {
-        dd('Hitted');
-
-        return redirect()->back();
     }
 }
