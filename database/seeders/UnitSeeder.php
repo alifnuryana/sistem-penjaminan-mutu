@@ -15,6 +15,15 @@ class UnitSeeder extends Seeder
      */
     public function run() : void
     {
+        //put file from database/documents to storage
+        $files = collect([
+            'sk_akreditasi.pdf', 'sk_pendirian.pdf'
+        ]);
+        $files->each(function ($file) : void {
+           $filePath = database_path('documents/' . $file);
+           $content = file_get_contents($filePath);
+           Storage::disk('local')->put($file, $content);
+        });
         $units = collect([
             [
                 'name' => 'Universitas Widyatama',
