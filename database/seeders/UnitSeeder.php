@@ -45,8 +45,8 @@ class UnitSeeder extends Seeder
             AttachDecreeableToDecree::run($unitable, DecreeData::from([
                 'code' => GenerateUniqueCode::run('DOC', 10),
                 'name' => 'SK' . ' ' . $unit['name'],
-                'file_path' => Storage::path('sample.pdf'),
-                'size' => Storage::size('sample.pdf'),
+                'file_path' => storage_path('/app/decree/sample.pdf'),
+                'size' => Storage::size('decree/sample.pdf'),
                 'type' => DecreeType::Establishment,
                 'decreeable_type' => $unitable->decree()->getMorphClass(),
                 'release_date' => now(),
