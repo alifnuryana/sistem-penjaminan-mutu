@@ -9,6 +9,7 @@ use App\Enums\AccreditationStatus;
 use App\Enums\DecreeType;
 use App\Models\Accreditation;
 use App\Models\Unit;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -33,6 +34,7 @@ class AccreditationSeeder extends Seeder
                 'type' => DecreeType::Accreditation,
                 'decreeable_type' => $accreditation->decree()->getMorphClass(),
                 'release_date' => now(),
+                'validity_date' => Carbon::make(fake()->dateTimeBetween('now', '+4 years')),
             ]);
 
             AttachDecreeableToDecree::run($accreditation, $data);
