@@ -120,11 +120,11 @@ class UnitSeeder extends Seeder
                 $unitable->decree()->create([
                     'code' => $this->generateUniqueCode('Decree', 10),
                     'decreeable_type' => $unitable->decree()->getMorphClass(),
-                    'name' => 'SK' . $unit['name'],
+                    'name' => 'SK' . ' ' . $unit['name'],
                     'file_path' => $file[array_rand($file)],
-                    'type' => DecreeType::establishment,
-                    'size' => Storage::size('surat.pdf'),
-                    'validity_date' => null,
+                    'type' => DecreeType::accreditation,
+                    'size' => Storage::size('sk_akreditasi.pdf'),
+                    'validity_date' => date('Y-m-d',strtotime(fake()->date() . ' + 5 years')),
                 ]);
 
             } else {
@@ -139,15 +139,15 @@ class UnitSeeder extends Seeder
                     'email' => $unit['email'],
                     'unitable_type' => $unitable->unit()->getMorphClass(),
                 ]);
-                $file = ['sk_akreditasi.pdf', 'sk_pendirian.pdf'];
+
                 $unitable->decree()->create([
                     'code' => $this->generateUniqueCode('Decree', 10),
                     'decreeable_type' => $unitable->decree()->getMorphClass(),
                     'name' => 'SK' . " " . $unit['name'],
-                    'file_path' => $file[array_rand($file)],
-                    'type' => array_rand(['SK Pendirian', 'SK Akreditasi']) == 0 ? DecreeType::establishment : DecreeType::accreditation,
-                    'size' =>  Storage::size('surat.pdf'),
-                    'validity_date' => date('Y-m-d',strtotime(fake()->date() . ' + 5 years'))
+                    'file_path' => 'sk_pendirian.pdf',
+                    'type' => DecreeType::establishment,
+                    'size' =>  Storage::size('sk_pendirian.pdf'),
+                    'validity_date' => null
                 ]);
             }
         });
