@@ -19,8 +19,8 @@ class AccreditationResource extends JsonResource
             'code' => $this->code,
             'grade' => $this->grade,
             'status' => $this->status,
-            'due_date' => $this->due_date,
-            'unit' => UnitResource::make($this->unit),
+            'unit' => $this->whenLoaded('unit', fn() => UnitResource::make($this->unit)),
+            'decree' => $this->whenLoaded('decree', fn() => DecreeResource::make($this->decree)),
         ];
     }
 }
