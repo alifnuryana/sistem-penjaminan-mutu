@@ -4,6 +4,6 @@ namespace App\Enums;
 
 enum DecreeType : string
 {
-    case establishment = 'SK Pendirian';
-    case accreditation = 'SK Akreditasi';
+    case Establishment = 'SK Pendirian';
+    case Accreditation = 'SK Akreditasi';
 }

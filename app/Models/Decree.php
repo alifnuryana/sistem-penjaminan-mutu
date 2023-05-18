@@ -2,20 +2,28 @@
 
 namespace App\Models;
 
+use App\Enums\DecreeType;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Facades\Date;
 
 class Decree extends Model
 {
     use HasUuids;
 
     protected $fillable = [
-        'code', 'name', 'decreeable_type', 'decreeable_id', 'file_path', 'type', 'size', 'release_date', 'validity_date'
+        'code', 'name', 'decreeable_type', 'decreeable_id', 'file_path', 'type', 'size', 'validity_date', 'release_date'
     ];
 
-    public function decreeable() : MorphTo
+    protected $casts = [
+        'validity_date' => 'date',
+        'release_date' => 'date',
+        'type' => DecreeType::class,
+    ];
+
+    public function decreeable(): MorphTo
     {
         return $this->morphTo();
     }

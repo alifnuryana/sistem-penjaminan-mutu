@@ -2,23 +2,14 @@
 
 use App\Http\Controllers\AccreditationController;
 use App\Http\Controllers\DataUnitController;
+use App\Http\Controllers\DetailDecreeController;
+use App\Http\Controllers\IndexDecreeController;
 use App\Http\Controllers\MultipleDeleteAccreditationController;
-use App\Http\Controllers\DecreeController;
 use App\Http\Controllers\MultipleDeleteUnitController;
+use App\Http\Controllers\ShowFileDecreeController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
 
 Route::redirect('/', RouteServiceProvider::HOME);
 
@@ -33,9 +24,8 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('data')->as('data.')->group(function () {
         Route::delete('units/destroys', MultipleDeleteUnitController::class)->name('units.destroys');
         Route::resource('units', DataUnitController::class)->only('index', 'create', 'store');
+        Route::get('/decrees', IndexDecreeController::class)->name('decrees.index');
+        Route::get('/decrees/detail', DetailDecreeController::class)->name('decrees.detail');
+        Route::get('/decress/file/{path}', ShowFileDecreeController::class)->name('decrees.file');
     });
-
-    Route::get('decrees/index', [DecreeController::class, 'index'])->name('decrees.index');
-    Route::get('decrees/detail', [DecreeController::class, 'detail'])->name('decrees.detail');
-    Route::get('decrees/file/{path}', [DecreeController::class, 'showFile'])->name('decrees.file');
 });
