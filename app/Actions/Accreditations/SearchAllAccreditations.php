@@ -21,13 +21,13 @@ class SearchAllAccreditations
         $query = Accreditation::query()
             ->with([
                 'unit.unitable',
+                'decree',
             ])
             ->whereHas('unit', function ($query) use ($keyword) {
                 return $query
                     ->where('code', 'like', "%{$keyword}%")
                     ->orWhere('name', 'like', "%{$keyword}%");
-            })
-            ->orderBy('due_date');
+            });
 
         if ($paginated) {
             return $query->paginate(10)
