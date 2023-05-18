@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedBigInteger('size');
             $table->enum('type', ['SK Akreditasi', 'SK Pendirian']);
             $table->uuidMorphs('decreeable');
+            $table->date('release_date');
             $table->date('validity_date')->nullable();
             $table->timestamps();
         });
