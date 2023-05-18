@@ -51,6 +51,8 @@
                                          :active="route().current('data.units.index')">
                                     Unit
                                 </Navlink>
+                            </li>
+                            <li>
                                 <Navlink :href="route('decrees.index')" :active="route().current('data.units.index')">
                                     SK
                                 </Navlink>
