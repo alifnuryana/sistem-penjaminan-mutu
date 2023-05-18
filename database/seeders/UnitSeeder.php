@@ -24,7 +24,7 @@ class UnitSeeder extends Seeder
      */
     public function run(): void
     {
-        //put file from database/documents to storage
+        /* TODO : refactor code ini agar tidak ada duplikasi step + buatkan actionnya! */
         $files = collect([
             'sk_akreditasi.pdf', 'sk_pendirian.pdf'
         ]);
