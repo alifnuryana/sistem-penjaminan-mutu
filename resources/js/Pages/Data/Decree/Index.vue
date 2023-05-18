@@ -52,7 +52,7 @@
                             <tr v-for="decree in props.decrees">
                                 <td class="h-px w-px whitespace-nowrap">
                                     <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
-                                        <a :href="route('decrees.file', decree.path)" class="group hover:text-blue-500" target="_blank">
+                                        <a :href="route('data.decrees.file', decree.path)" class="group hover:text-blue-500" target="_blank">
                                             <span class="inline-flex items-center gap-1 group-hover:underline">
                                                 <DocumentIcon class="w-5 h-5"/>
                                                 {{decree.path}}
@@ -87,7 +87,7 @@
                                 </td>
                                 <td class="h-px w-px whitespace-nowrap">
                                     <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
-                                        <a :href="route('decrees.detail', 1)" class=" text-blue-500 font-semibold hover:underline">Detail</a>
+                                        <a :href="route('data.decrees.detail', 1)" class=" text-blue-500 font-semibold hover:underline">Detail</a>
                                     </div>
                                 </td>
                             </tr>
