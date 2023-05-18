@@ -101,16 +101,14 @@
 </template>
 <script setup>
 import AppLayout from "@/Components/Layouts/AppLayout.vue";
-import {defineProps} from "vue"
 import HeaderTable from "@/Components/HeaderTable.vue";
 import MainTable from "@/Components/MainTable.vue";
 import {DocumentIcon} from "@heroicons/vue/24/outline/index.js";
+
 const props = defineProps({
     decrees : {
         default : null,
         required : true
     }
 });
-
-
 </script>
