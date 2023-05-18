@@ -23,7 +23,7 @@ entity Unit {
     * unitable_id : UUID <<FK>>
 }
 
-entity Major {
+entity StudyProgram {
     * id : UUID <<generated>> <<PK>>
     ---
     * degree : Enum (D3, D4, S1, S2, S3)
@@ -45,7 +45,6 @@ entity Accreditation {
     * number : String <<unique>>
     * grade : Enum ("A", "B", "C", "D", "E", "Unggul", "Baik", "Cukup", "Kurang")
     * status: Enum ("Aktif", "Tidak Aktif")
-    * validity_date : Timestamp
     * createdAt : Timestamp <<generated>>
     * updatedAt : Timestamp <<generated>>
     ---
@@ -63,7 +62,7 @@ entity Notification {
     * accreditation_id: UUID <<FK>>
 }
 
-entity Document {
+entity Decree {
     * id : UUID <<generated>> <<PK>>
     ---
     * code : String (100)
@@ -71,7 +70,7 @@ entity Document {
     * file_path : String (100)
     size : Integer
     * release_date: Date
-    validity_date : Date
+    due_date : Date
     * type : Enum ("Pendirian", "Akreditasi")
     * documentable_type : String (100)
     * createdAt : Timestamp <<generated>>
@@ -81,15 +80,15 @@ entity Document {
 }
 
 
-Major ||--|| Unit
+StudyProgram ||--|| Unit
 
-University ||--o{ Major
+University ||--o{ StudyProgram
 University ||--|| Unit
 
 Accreditation ||--o{ Notification
 Accreditation }o--|| Unit
 
-Document |o--|| University
-Document |o--|| Major
-Document |o--|| Accreditation
+Decree |o--|| University
+Decree |o--|| StudyProgram
+Decree |o--|| Accreditation
 @enduml

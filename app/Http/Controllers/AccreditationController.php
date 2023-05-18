@@ -18,7 +18,6 @@ use App\Http\Requests\CreateAccreditationRequest;
 use App\Http\Resources\AccreditationResource;
 use App\Http\Resources\UnitResource;
 use App\Models\Accreditation;
-use App\Services\UtilityService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -45,7 +44,7 @@ class AccreditationController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(UtilityService $utilityService)
+    public function create()
     {
         return Inertia::render('Accreditations/Create', [
             'code' => GenerateUniqueCode::run('AKRE'),

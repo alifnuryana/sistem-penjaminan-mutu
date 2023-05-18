@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Utilities\GenerateUniqueCode;
 use App\Http\Requests\CreateUnitRequest;
 use App\Http\Resources\UnitResource;
 use App\Models\StudyProgram;
 use App\Models\Unit;
 use App\Models\University;
-use App\Services\UtilityService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -38,10 +38,10 @@ class DataUnitController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(UtilityService $utilityService)
+    public function create()
     {
         return Inertia::render('Data/Unit/Create', [
-            'code' => $utilityService->generateNewCode('UNT'),
+            'code' => GenerateUniqueCode::run('UNIT'),
         ]);
     }
 
