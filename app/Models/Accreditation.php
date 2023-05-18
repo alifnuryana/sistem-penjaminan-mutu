@@ -28,12 +28,12 @@ class Accreditation extends Model
         'status' => AccreditationStatus::class,
     ];
 
-    public function unit() : BelongsTo
+    public function unit(): BelongsTo
     {
         return $this->belongsTo(Unit::class);
     }
 
-    public function decree() : MorphOne
+    public function decree(): MorphOne
     {
         return $this->morphOne(Decree::class, 'decreeable');
     }

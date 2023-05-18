@@ -27,7 +27,7 @@ class StudyProgram extends Model
         return $this->belongsTo(University::class);
     }
 
-    public function decree() : MorphOne
+    public function decree(): MorphOne
     {
         return $this->morphOne(Decree::class, 'decreeable');
     }

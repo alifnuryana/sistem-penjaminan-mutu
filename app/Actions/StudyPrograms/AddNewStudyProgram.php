@@ -12,8 +12,6 @@ class AddNewStudyProgram
 
     /**
      * Create a new study program.
-     * @param StudyProgramData $data
-     * @return StudyProgram
      */
     public function handle(StudyProgramData $data): StudyProgram
     {

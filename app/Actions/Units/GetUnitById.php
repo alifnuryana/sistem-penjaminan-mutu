@@ -11,8 +11,6 @@ class GetUnitById
 
     /**
      * Get unit by id
-     * @param string $uuid
-     * @return Unit
      */
     public function handle(string $uuid): Unit
     {

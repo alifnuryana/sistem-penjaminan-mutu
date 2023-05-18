@@ -74,7 +74,7 @@ class AccreditationController extends Controller
         $data = DecreeData::from([
             'code' => GenerateUniqueCode::run('DOC'),
             /* TODO : jika field itu unique dan ingin digenerate oleh sistem paling tidak hasil generate nya unique juga dong. seperti kode di atas ini */
-            'name' => 'SK Akreditasi' . GetUnitById::run($request->input('unit_id'))->name,
+            'name' => 'SK Akreditasi'.GetUnitById::run($request->input('unit_id'))->name,
             'file_path' => $file->getClientOriginalName(),
             'size' => $request->file('decree')->getSize(),
             'type' => DecreeType::Accreditation,

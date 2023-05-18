@@ -11,7 +11,6 @@ class LoadSamplePdf
 
     /**
      * Load sample pdf file to storage.
-     * @return void
      */
     public function handle(): void
     {

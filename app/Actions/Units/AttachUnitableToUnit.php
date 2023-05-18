@@ -11,11 +11,6 @@ class AttachUnitableToUnit
 {
     use AsAction;
 
-    /**
-     * @param University|StudyProgram $unitabel
-     * @param UnitData $data
-     * @return void
-     */
     public function handle(University|StudyProgram $unitabel, UnitData $data): void
     {
         $unitabel->unit()->create($data->toArray());

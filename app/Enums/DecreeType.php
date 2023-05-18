@@ -2,7 +2,7 @@
 
 namespace App\Enums;
 
-enum DecreeType : string
+enum DecreeType: string
 {
     case Establishment = 'SK Pendirian';
     case Accreditation = 'SK Akreditasi';

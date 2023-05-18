@@ -10,12 +10,11 @@ use Spatie\LaravelData\Data;
 class AccreditationData extends Data
 {
     public function __construct(
-        public string              $code,
-        public AccreditationGrade  $grade,
+        public string $code,
+        public AccreditationGrade $grade,
         public AccreditationStatus $status,
-        public Carbon              $due_date,
-        public string              $unit_id,
-    )
-    {
+        public Carbon $due_date,
+        public string $unit_id,
+    ) {
     }
 }

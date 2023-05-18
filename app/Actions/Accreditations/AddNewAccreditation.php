@@ -10,10 +10,6 @@ class AddNewAccreditation
 {
     use AsAction;
 
-    /**
-     * @param AccreditationData $data
-     * @return Accreditation
-     */
     public function handle(AccreditationData $data): Accreditation
     {
         return Accreditation::query()

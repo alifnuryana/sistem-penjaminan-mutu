@@ -13,9 +13,6 @@ class SearchAllAccreditations
 
     /**
      * Search all accreditations.
-     * @param string $keyword
-     * @param bool $paginated
-     * @return Collection|LengthAwarePaginator
      */
     public function handle(string $keyword = '', bool $paginated = false): Collection|LengthAwarePaginator
     {

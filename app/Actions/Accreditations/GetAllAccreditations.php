@@ -13,8 +13,6 @@ class GetAllAccreditations
 
     /**
      * Get all accreditations.
-     * @param bool $paginated
-     * @return Collection|LengthAwarePaginator
      */
     public function handle(bool $paginated = false): Collection|LengthAwarePaginator
     {

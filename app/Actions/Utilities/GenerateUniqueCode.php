@@ -10,11 +10,9 @@ class GenerateUniqueCode
 
     /**
      * Generate new unique code.
-     * @param string $prefix
-     * @return string
      */
     public function handle(string $prefix): string
     {
-        return $prefix . '-' . date('Ymd') . '-' . mb_substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 1, 5);
+        return $prefix.'-'.date('Ymd').'-'.mb_substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 1, 5);
     }
 }

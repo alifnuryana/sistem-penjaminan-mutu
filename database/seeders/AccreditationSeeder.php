@@ -9,7 +9,6 @@ use App\Enums\AccreditationStatus;
 use App\Enums\DecreeType;
 use App\Models\Accreditation;
 use App\Models\Unit;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -28,7 +27,7 @@ class AccreditationSeeder extends Seeder
 
             $data = DecreeData::from([
                 'code' => GenerateUniqueCode::run('DOC', 10),
-                'name' => 'SK Akreditasi ' . $accreditation->unit->name,
+                'name' => 'SK Akreditasi '.$accreditation->unit->name,
                 'file_path' => storage_path('/app/decree/sample.pdf'),
                 'size' => Storage::size('decree/sample.pdf'),
                 'type' => DecreeType::Accreditation,

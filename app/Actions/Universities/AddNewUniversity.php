@@ -10,11 +10,8 @@ class AddNewUniversity
 {
     use AsAction;
 
-
     /**
      * Create a new university.
-     * @param UniversityData $data
-     * @return University
      */
     public function handle(UniversityData $data): University
     {

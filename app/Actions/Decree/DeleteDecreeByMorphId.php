@@ -9,10 +9,6 @@ class DeleteDecreeByMorphId
 {
     use AsAction;
 
-    /**
-     * @param string $uuid
-     * @return void
-     */
     public function handle(string $uuid): void
     {
         Decree::query()

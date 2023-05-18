@@ -11,7 +11,6 @@ class GetUnitsDummyData
 
     /**
      * Get dummy data for units.
-     * @return Collection
      */
     public function handle(): Collection
     {

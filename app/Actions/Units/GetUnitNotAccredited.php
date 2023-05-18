@@ -13,7 +13,6 @@ class GetUnitNotAccredited
 
     /**
      * Get all units that are not accredited.
-     * @return Collection
      */
     public function handle(): Collection
     {

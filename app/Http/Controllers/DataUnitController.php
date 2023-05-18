@@ -22,6 +22,7 @@ class DataUnitController extends Controller
         $units = Unit::query()
             ->when($request->input('keyword'), function ($query, $keyword) {
                 $keyword = ucwords($keyword);
+
                 return $query->where('name', 'like', "%{$keyword}%");
             })
             ->with([

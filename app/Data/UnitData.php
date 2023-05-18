@@ -11,7 +11,6 @@ class UnitData extends Data
         public string $code,
         public string $email,
         public string $unitable_type,
-    )
-    {
+    ) {
     }
 }

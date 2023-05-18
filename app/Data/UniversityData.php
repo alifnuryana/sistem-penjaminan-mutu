@@ -8,7 +8,6 @@ class UniversityData extends Data
 {
     public function __construct(
         public string $address,
-    )
-    {
+    ) {
     }
 }

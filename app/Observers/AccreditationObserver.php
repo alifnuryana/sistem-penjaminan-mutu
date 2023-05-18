@@ -4,8 +4,6 @@ namespace App\Observers;
 
 use App\Actions\Decree\DeleteDecreeByMorphId;
 use App\Models\Accreditation;
-use App\Models\Decree;
-use Illuminate\Support\Facades\Log;
 
 class AccreditationObserver
 {
