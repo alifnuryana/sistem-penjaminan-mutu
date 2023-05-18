@@ -3,7 +3,7 @@
         <div class="max-w-5xl w-full">
             <!-- Card -->
             <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
-                <form @submit.prevent="">
+                <form @submit.prevent="submit">
                     <!-- Section -->
                     <div
                         class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
@@ -40,12 +40,14 @@
                         <div class="col-span-9">
                             <select id="unit_id"
                                     v-model="form.unit_id"
+                                    :disabled="units.length === 0"
                                     class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
                                 <option selected></option>
                                 <option v-for="unit in units" :key="unit.id" :value="unit.id">
                                     {{ unit.name }} - {{ unit.unitable.degree }}
                                 </option>
                             </select>
+                            <p class="text-sm text-gray-500 mt-2" v-if="units.length === 0">Seluruh unit telah memiliki akreditasi.</p>
                             <InputError id="unit_id" v-if="form.errors.unit_id">
                                 {{ form.errors.unit_id }}
                             </InputError>
@@ -83,7 +85,8 @@
 
                         <div class="col-span-9">
                             <!-- TODO : buat komponen baru untuk input tipe date biar bisa implementasi min and max date -->
-                            <InputField id="due_date" name="due_date" type="date" v-model="form.due_date"/>
+                            <InputField id="due_date" name="due_date" type="date"
+                                        v-model="form.due_date"/>
                             <InputError id="degree" v-if="form.errors.degree">
                                 {{ form.errors.degree }}
                             </InputError>
@@ -112,12 +115,12 @@
                             <label class="block">
                                 <input type="file" id="decree" name="decree"
                                        @input="form.decree = $event.target.files[0]" class="block w-full text-sm text-gray-500
-                                  file:mr-4 file:py-2 file:px-4
-                                  file:rounded-md file:border-0
-                                  file:text-sm file:font-semibold
-                                  file:bg-blue-500 file:text-white
-                                  hover:file:bg-blue-600
-                                "/>
+                                          file:mr-4 file:py-2 file:px-4
+                                          file:rounded-md file:border-0
+                                          file:text-sm file:font-semibold
+                                          file:bg-blue-500 file:text-white
+                                          hover:file:bg-blue-600
+                                        "/>
                             </label>
                             <InputError id="decree" v-if="form.errors.decree">
                                 {{ form.errors.decree }}
@@ -181,4 +184,11 @@ const form = useForm({
     decree: "",
     decree_number: "",
 });
+
+function submit() {
+    form.post(route("accreditations.store"), {
+        preserveScroll: true,
+        onSuccess: () => form.reset(),
+    });
+}
 </script>
