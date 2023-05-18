@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\AccreditationStatus;
+use App\Enums\DecreeType;
 use App\Http\Requests\CreateAccreditationRequest;
 use App\Http\Resources\AccreditationResource;
 use App\Http\Resources\UnitResource;
@@ -71,16 +72,24 @@ class AccreditationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateAccreditationRequest $request)
+    public function store(CreateAccreditationRequest $request, UtilityService $utilityService)
     {
         $file = $request->file('decree');
-        $name = $file->hashName();
 
-        // TODO : simpan juga file ke dalam database decree
-        $upload = Storage::put('decree', $file);
+        Storage::put($file->getClientOriginalName(), file_get_contents($file->getRealPath()));
 
-        Accreditation::query()
+        $decreeable = Accreditation::query()
             ->create($request->only('code', 'grade', 'due_date', 'unit_id'));
+        $decreeable->decree()->create([
+            'code' => $utilityService->generateNewCode('DECREE'),
+            'name' => 'SK Akreditasi ' . Unit::findOrFail($request->unit_id)->name,
+            'file_path' => $file->getClientOriginalName(),
+            'size' => $request->file('decree')->getSize(),
+            'type' => DecreeType::accreditation,
+            'decreeable_type' => $decreeable->decree()->getMorphClass(),
+            'validity_date' => $request->due_date,
+            'release_date' => $request->release_date
+        ]);
 
         return redirect(route('accreditations.index'));
     }
