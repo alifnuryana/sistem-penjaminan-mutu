@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Actions\Accreditations\AddNewAccreditation;
 use App\Actions\Accreditations\GetAllAccreditations;
 use App\Actions\Accreditations\SearchAllAccreditations;
+use App\Actions\Decree\AttachDecreeableToDecree;
+use App\Actions\Units\GetUnitById;
 use App\Actions\Units\GetUnitNotAccredited;
 use App\Actions\Utilities\GenerateUniqueCode;
 use App\Data\AccreditationData;
+use App\Data\DecreeData;
 use App\Enums\AccreditationGrade;
 use App\Enums\AccreditationStatus;
 use App\Enums\DecreeType;
@@ -53,7 +56,7 @@ class AccreditationController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreateAccreditationRequest $request, UtilityService $utilityService)
+    public function store(CreateAccreditationRequest $request)
     {
         $file = $request->file('decree');
 
@@ -67,19 +70,20 @@ class AccreditationController extends Controller
             'unit_id' => $request->input('unit_id'),
         ]);
 
-        AddNewAccreditation::run($data);
-        $decreeable = Accreditation::query()
-            ->create($request->only('code', 'grade', 'due_date', 'unit_id'));
-        $decreeable->decree()->create([
-            'code' => $utilityService->generateNewCode('DECREE'),
-            'name' => 'SK Akreditasi ' . Unit::findOrFail($request->unit_id)->name,
+        $accreditation = AddNewAccreditation::run($data);
+
+        $data = DecreeData::from([
+            'code' => GenerateUniqueCode::run('DOC'),
+            'name' => 'SK Akreditasi' . GetUnitById::run($request->input('unit_id'))->name,
             'file_path' => $file->getClientOriginalName(),
             'size' => $request->file('decree')->getSize(),
-            'type' => DecreeType::accreditation,
-            'decreeable_type' => $decreeable->decree()->getMorphClass(),
-            'validity_date' => $request->due_date,
-            'release_date' => $request->release_date
+            'type' => DecreeType::Accreditation,
+            'decreeable_type' => $accreditation->decree()->getMorphClass(),
+            'release_date' => Carbon::create($request->input('release_date')),
+            'validity_date' => Carbon::create($request->input('due_date')),
         ]);
+
+        AttachDecreeableToDecree::run($accreditation, $data);
 
         return redirect(route('accreditations.index'));
     }
