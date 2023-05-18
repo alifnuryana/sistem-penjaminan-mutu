@@ -27,5 +27,4 @@ class Decree extends Model
     {
         return $this->morphTo();
     }
-
 }

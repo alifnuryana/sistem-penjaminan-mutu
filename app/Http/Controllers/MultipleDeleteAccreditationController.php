@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Accreditations\DeleteAccreditation;
 use App\Models\Accreditation;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class MultipleDeleteAccreditationController extends Controller
     {
         $ids = $request->input('ids');
 
-        Accreditation::whereIn('id', $ids)->delete();
+        foreach ($ids as $id) {
+            DeleteAccreditation::run($id);
+        }
 
         return redirect(route('accreditations.index'));
     }

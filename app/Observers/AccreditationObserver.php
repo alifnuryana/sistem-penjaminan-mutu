@@ -2,7 +2,10 @@
 
 namespace App\Observers;
 
+use App\Actions\Decree\DeleteDecreeByMorphId;
 use App\Models\Accreditation;
+use App\Models\Decree;
+use Illuminate\Support\Facades\Log;
 
 class AccreditationObserver
 {
@@ -11,7 +14,6 @@ class AccreditationObserver
      */
     public function created(Accreditation $accreditation): void
     {
-        //
     }
 
     /**
@@ -27,7 +29,7 @@ class AccreditationObserver
      */
     public function deleted(Accreditation $accreditation): void
     {
-        $accreditation->decree()->delete();
+        DeleteDecreeByMorphId::run($accreditation->id);
     }
 
     /**

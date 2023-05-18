@@ -37,6 +37,4 @@ class Accreditation extends Model
     {
         return $this->morphOne(Decree::class, 'decreeable');
     }
-
-
 }
