@@ -10,20 +10,20 @@ use Inertia\Inertia;
 
 class DecreeController extends Controller
 {
-    public function index(){
-
-
-        return Inertia::render('Data/Decree/index', [
+    public function index()
+    {
+        return Inertia::render('Data/Decree/Index', [
             'decrees' => GetAllDecree::run()
         ]);
     }
 
-    public function detail(){
+    public function detail()
+    {
         return 'success';
     }
 
-    public function showFile($path){
-
+    public function showFile($path)
+    {
         return response()->file(Storage::path($path));
     }
 }
