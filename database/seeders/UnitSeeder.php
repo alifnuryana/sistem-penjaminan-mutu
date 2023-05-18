@@ -11,7 +11,7 @@ class UnitSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run() : void
     {
         $units = collect([
             [
@@ -93,7 +93,7 @@ class UnitSeeder extends Seeder
             ],
         ]);
 
-        $units->each(function ($unit): void {
+        $units->each(function ($unit) : void {
             if ('App\Models\University' === $unit['unitable_type']) {
                 $unitable = University::create([
                     'address' => $unit['address'],
@@ -121,10 +121,10 @@ class UnitSeeder extends Seeder
         });
     }
 
-    public function generateUniqueCode(string $prefix, int $length = 10): string
+    public function generateUniqueCode(string $prefix, int $length = 10) : string
     {
         $code = $prefix;
-        $code .= mb_strtoupper(mb_substr(md5(uniqid((string) rand(), true)), 0, $length - mb_strlen($prefix)));
+        $code .= mb_strtoupper(mb_substr(md5(uniqid((string) rand(), TRUE)), 0, $length - mb_strlen($prefix)));
 
         return $code;
     }

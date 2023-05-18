@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run(): void
+    public function run() : void
     {
         User::factory()->create([
             'name' => 'Test User',
@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UnitSeeder::class,
+            AccreditationSeeder::class,
         ]);
     }
 }
