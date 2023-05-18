@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->enum('grade', ['A', 'B', 'C', 'D', 'E']);
             $table->enum('status', ['active', 'inactive'])->default('active');
-            $table->date('due_date');
             $table->foreignUuid('unit_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });

@@ -18,12 +18,10 @@ class Accreditation extends Model
         'code',
         'grade',
         'status',
-        'due_date',
         'unit_id',
     ];
 
     protected $casts = [
-        'due_date' => 'date',
         'grade' => AccreditationGrade::class,
         'status' => AccreditationStatus::class,
     ];
