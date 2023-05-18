@@ -86,8 +86,8 @@
                         <div class="col-span-9">
                             <InputField id="release_date" name="release_date" type="date"
                                         v-model="form.release_date"/>
-                            <InputError id="degree" v-if="form.errors.degree">
-                                {{ form.errors.degree }}
+                            <InputError id="degree" v-if="form.errors.release_date">
+                                {{ form.errors.release_date }}
                             </InputError>
                         </div>
                         <!-- End Col -->
@@ -101,8 +101,8 @@
                             <!-- TODO : buat komponen baru untuk input tipe date biar bisa implementasi min and max date -->
                             <InputField id="due_date" name="due_date" type="date"
                                         v-model="form.due_date"/>
-                            <InputError id="degree" v-if="form.errors.degree">
-                                {{ form.errors.degree }}
+                            <InputError id="degree" v-if="form.errors.due_date">
+                                {{ form.errors.due_date }}
                             </InputError>
                         </div>
                         <!-- End Col -->
