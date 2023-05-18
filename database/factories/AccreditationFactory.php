@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use App\Actions\Utilities\GenerateUniqueCode;
 use App\Enums\AccreditationStatus;
-use App\Services\UtilityService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,13 +18,10 @@ class AccreditationFactory extends Factory
      */
     public function definition(): array
     {
-        $utilityService = new UtilityService();
-
         return [
             'code' => GenerateUniqueCode::run('AKRE'),
             'grade' => $this->faker->randomElement(['A', 'B', 'C', 'D']),
             'status' => $this->faker->randomElement([AccreditationStatus::Active, AccreditationStatus::Inactive]),
-            'due_date' => $this->faker->dateTimeBetween('now', '+2 year'),
         ];
     }
 }
