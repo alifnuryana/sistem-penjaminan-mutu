@@ -45,7 +45,7 @@
 
                     <div id="master-data-accordion-child"
                          class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                        <ul class="pt-2 pl-2">
+                        <ul class="pt-2 pl-2 space-y-1">
                             <li>
                                 <Navlink :href="route('data.units.index')"
                                          :active="route().current('data.units.index')">
@@ -53,8 +53,9 @@
                                 </Navlink>
                             </li>
                             <li>
-                                <Navlink :href="route('decrees.index')" :active="route().current('data.units.index')">
-                                    SK
+                                <Navlink :href="route('data.decrees.index')"
+                                         :active="route().current('data.decrees.index')">
+                                    Dokumen SK
                                 </Navlink>
                             </li>
                         </ul>
