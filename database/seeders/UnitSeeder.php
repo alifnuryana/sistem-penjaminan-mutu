@@ -2,9 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Enums\DecreeType;
 use App\Models\StudyProgram;
 use App\Models\University;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Storage;
 
 class UnitSeeder extends Seeder
 {
@@ -105,6 +107,17 @@ class UnitSeeder extends Seeder
                     'email' => $unit['email'],
                     'unitable_type' => $unitable->unit()->getMorphClass(),
                 ]);
+                $file = Storage::get('surat.pdf');
+                $unitable->decree()->create([
+                    'code' => $this->generateUniqueCode('Decree', 10),
+                    'decreeable_type' => $unitable->decree()->getMorphClass(),
+                    'name' => 'SK' . $unit['name'],
+                    'file_path' => 'surat.pdf',
+                    'type' => DecreeType::establishment,
+                    'size' => Storage::size('surat.pdf'),
+                    'validity_date' => null,
+                ]);
+
             } else {
                 $unitable = StudyProgram::create([
                     'degree' => $unit['degree'],
@@ -116,6 +129,17 @@ class UnitSeeder extends Seeder
                     'code' => $unit['code'],
                     'email' => $unit['email'],
                     'unitable_type' => $unitable->unit()->getMorphClass(),
+                ]);
+
+                $file = Storage::get('surat.pdf');
+                $unitable->decree()->create([
+                    'code' => $this->generateUniqueCode('Decree', 10),
+                    'decreeable_type' => $unitable->decree()->getMorphClass(),
+                    'name' => 'SK' . " " . $unit['name'],
+                    'file_path' => 'surat.pdf',
+                    'type' => array_rand(['SK Pendirian', 'SK Akreditasi']) == 0 ? DecreeType::establishment : DecreeType::accreditation,
+                    'size' =>  Storage::size('surat.pdf'),
+                    'validity_date' => date('Y-m-d',strtotime(fake()->date() . ' + 5 years'))
                 ]);
             }
         });

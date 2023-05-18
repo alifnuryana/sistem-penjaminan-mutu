@@ -25,4 +25,9 @@ class University extends Model
     {
         return $this->hasMany(StudyProgram::class);
     }
+
+    public function decree() : MorphOne
+    {
+        return $this->morphOne(Decree::class, 'decreeable');
+    }
 }

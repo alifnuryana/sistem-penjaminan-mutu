@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class Accreditation extends Model
 {
@@ -31,4 +32,11 @@ class Accreditation extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function decree() : MorphOne
+    {
+        return $this->morphOne(Decree::class, 'decreeable');
+    }
+
+
 }
