@@ -8,6 +8,7 @@ use App\Actions\Units\AttachUnitableToUnit;
 use App\Actions\Universities\AddNewUniversity;
 use App\Actions\Utilities\GenerateUniqueCode;
 use App\Actions\Utilities\GetUnitsDummyData;
+use App\Actions\Utilities\LoadSamplePdf;
 use App\Data\DecreeData;
 use App\Data\StudyProgramData;
 use App\Data\UnitData;
@@ -24,63 +25,39 @@ class UnitSeeder extends Seeder
      */
     public function run(): void
     {
-        /* TODO : refactor code ini agar tidak ada duplikasi step + buatkan actionnya! */
-        $files = collect([
-            'sk_akreditasi.pdf', 'sk_pendirian.pdf'
-        ]);
-        $files->each(function ($file): void {
-            $filePath = database_path('documents/' . $file);
-            $content = file_get_contents($filePath);
-            Storage::disk('local')->put($file, $content);
-        });
+        LoadSamplePdf::run();
 
         $units = GetUnitsDummyData::run();
 
         $units->each(function ($unit): void {
+            $unitable = null;
             if ('App\Models\University' === $unit['unitable_type']) {
-                $university = AddNewUniversity::run(UniversityData::from([
+                $unitable = AddNewUniversity::run(UniversityData::from([
                     'address' => $unit['address'],
                 ]));
-
-                AttachUnitableToUnit::run($university, UnitData::from([
-                    'name' => $unit['name'],
-                    'code' => $unit['code'],
-                    'email' => $unit['email'],
-                    'unitable_type' => $university->unit()->getMorphClass(),
-                ]));
-
-                AttachDecreeableToDecree::run($university, DecreeData::from([
-                    'code' => GenerateUniqueCode::run('DOC', 10),
-                    'name' => 'SK' . ' ' . $unit['name'],
-                    'file_path' => 'sk_pendirian.pdf',
-                    'size' => Storage::size('sk_akreditasi.pdf'),
-                    'type' => DecreeType::Establishment,
-                    'decreeable_type' => $university->decree()->getMorphClass(),
-                    'release_date' => now(),
-                ]));
             } else {
-                $studyProgram = AddNewStudyProgram::run(StudyProgramData::from([
+                $unitable = AddNewStudyProgram::run(StudyProgramData::from([
                     'degree' => $unit['degree'],
                     'university_id' => University::first()->id,
                 ]));
-
-                AttachUnitableToUnit::run($studyProgram, UnitData::from([
-                    'name' => $unit['name'],
-                    'code' => $unit['code'],
-                    'email' => $unit['email'],
-                    'unitable_type' => $studyProgram->unit()->getMorphClass(),
-                ]));
-
-                AttachDecreeableToDecree::run($studyProgram, DecreeData::from([
-                    'code' => GenerateUniqueCode::run('DOC', 10),
-                    'name' => 'SK' . ' ' . $unit['name'],
-                    'file_path' => 'sk_pendirian.pdf',
-                    'size' => Storage::size('sk_pendirian.pdf'),
-                    'type' => DecreeType::Establishment,
-                    'decreeable_type' => $studyProgram->decree()->getMorphClass(),
-                    'release_date' => now(),
-                ]));
             }
+
+            AttachDecreeableToDecree::run($unitable, DecreeData::from([
+                'code' => GenerateUniqueCode::run('DOC', 10),
+                'name' => 'SK' . ' ' . $unit['name'],
+                'file_path' => Storage::path('sample.pdf'),
+                'size' => Storage::size('sample.pdf'),
+                'type' => DecreeType::Establishment,
+                'decreeable_type' => $unitable->decree()->getMorphClass(),
+                'release_date' => now(),
+            ]));
+
+            AttachUnitableToUnit::run($unitable, UnitData::from([
+                'name' => $unit['name'],
+                'code' => $unit['code'],
+                'email' => $unit['email'],
+                'unitable_type' => $unitable->unit()->getMorphClass(),
+            ]));
         });
     }
 }
