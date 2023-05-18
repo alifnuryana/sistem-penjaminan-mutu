@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DataUnitController;
+use App\Http\Controllers\DecreeController;
 use App\Http\Controllers\MultipleDeleteUnitController;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Support\Facades\Route;
@@ -28,4 +29,8 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('units/destroys', MultipleDeleteUnitController::class)->name('units.destroys');
         Route::resource('units', DataUnitController::class)->only('index', 'create', 'store');
     });
+
+    Route::get('decrees/index', [DecreeController::class, 'index'])->name('decrees.index');
+    Route::get('decrees/detail', [DecreeController::class, 'detail'])->name('decrees.detail');
+    Route::get('decrees/file/{path}', [DecreeController::class, 'showFile'])->name('decrees.file');
 });
