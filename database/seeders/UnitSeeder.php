@@ -125,6 +125,7 @@ class UnitSeeder extends Seeder
                     'type' => DecreeType::accreditation,
                     'size' => Storage::size('sk_akreditasi.pdf'),
                     'validity_date' => date('Y-m-d',strtotime(fake()->date() . ' + 5 years')),
+                    'release_date' => date('Y-m-d'),
                 ]);
 
             } else {
@@ -147,7 +148,8 @@ class UnitSeeder extends Seeder
                     'file_path' => 'sk_pendirian.pdf',
                     'type' => DecreeType::establishment,
                     'size' =>  Storage::size('sk_pendirian.pdf'),
-                    'validity_date' => null
+                    'validity_date' => null,
+                    'release_date' => date('d-m-y'),
                 ]);
             }
         });
