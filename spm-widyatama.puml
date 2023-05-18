@@ -70,7 +70,7 @@ entity Decree {
     * file_path : String (100)
     size : Integer
     * release_date: Date
-    due_date : Date
+    validity_date : Date
     * type : Enum ("Pendirian", "Akreditasi")
     * documentable_type : String (100)
     * createdAt : Timestamp <<generated>>
