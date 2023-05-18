@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('type', ['SK Akreditasi', 'SK Pendirian']);
             $table->uuidMorphs('decreeable');
             $table->date('validity_date')->nullable();
+            $table->date('release_date');
             $table->timestamps();
         });
     }
