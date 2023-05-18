@@ -79,6 +79,20 @@
                         <!-- End Col -->
 
                         <div class="col-span-3">
+                            <InputLabel for="release_date" class="mt-3">Tanggal Penerbitan Surat</InputLabel>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <InputField id="release_date" name="release_date" type="date"
+                                        v-model="form.release_date"/>
+                            <InputError id="degree" v-if="form.errors.degree">
+                                {{ form.errors.degree }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-3">
                             <InputLabel for="due_date" class="mt-3">Masa Berlaku</InputLabel>
                         </div>
                         <!-- End Col -->
@@ -92,6 +106,7 @@
                             </InputError>
                         </div>
                         <!-- End Col -->
+
                     </div>
                     <!-- End Section -->
 
@@ -100,7 +115,7 @@
                         class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
                         <div class="col-span-12">
                             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                                SK
+                                SK Akreditasi
                             </h2>
                         </div>
                         <!-- End Col -->
@@ -183,6 +198,7 @@ const form = useForm({
     unit_id: "",
     decree: "",
     decree_number: "",
+    release_date: ''
 });
 
 function submit() {
