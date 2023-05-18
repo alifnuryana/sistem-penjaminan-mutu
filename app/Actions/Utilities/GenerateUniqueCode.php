@@ -9,16 +9,12 @@ class GenerateUniqueCode
     use AsAction;
 
     /**
-     * Generate unique code.
+     * Generate new unique code.
      * @param string $prefix
-     * @param int $length
      * @return string
      */
-    public function handle(string $prefix, int $length = 10): string
+    public function handle(string $prefix): string
     {
-        $code = $prefix;
-        $code .= mb_strtoupper(mb_substr(md5(uniqid((string) rand(), TRUE)), 0, $length - mb_strlen($prefix)));
-
-        return $code;
+        return $prefix . '-' . date('Ymd') . '-' . mb_substr(str_shuffle('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'), 1, 5);
     }
 }
