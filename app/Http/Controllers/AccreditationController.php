@@ -2,13 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Accreditations\AddNewAccreditation;
+use App\Actions\Accreditations\GetAllAccreditations;
+use App\Actions\Accreditations\SearchAllAccreditations;
+use App\Actions\Units\GetUnitNotAccredited;
+use App\Actions\Utilities\GenerateUniqueCode;
+use App\Data\AccreditationData;
+use App\Enums\AccreditationGrade;
 use App\Enums\AccreditationStatus;
 use App\Http\Requests\CreateAccreditationRequest;
 use App\Http\Resources\AccreditationResource;
 use App\Http\Resources\UnitResource;
 use App\Models\Accreditation;
-use App\Models\Unit;
 use App\Services\UtilityService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
@@ -20,32 +27,13 @@ class AccreditationController extends Controller
      */
     public function index(Request $request)
     {
-        $accreditations = Accreditation::query()
-            ->with([
-                'unit.unitable',
-            ])
-            ->when($request->input('keyword'), function ($query, $keyword) {
-                $keyword = ucwords($keyword);
-                return $query->whereHas('unit', function ($query) use ($keyword) {
-                    return $query
-                        ->where('code', 'like', "%{$keyword}%")
-                        ->orWhere('name', 'like', "%{$keyword}%");
-                });
-            })
-            ->orderBy('due_date')
-            ->paginate(10)
-            ->withQueryString();
-
-        $statusAccreditation = Unit::query()
-            ->with(['accreditations', 'unitable'])
-            ->whereDoesntHave('accreditations', function ($query): void {
-                $query->where('status', '=', AccreditationStatus::Active);
-            })
-            ->get();
+        $accreditations = $request->input('keyword')
+            ? SearchAllAccreditations::run($request->input('keyword'), true)
+            : GetAllAccreditations::run(true);
 
         return Inertia::render('Accreditations/Index', [
             'accreditations' => AccreditationResource::collection($accreditations),
-            'unitNotAccreditedCount' => $statusAccreditation->count(),
+            'unitNotAccreditedCount' => GetUnitNotAccredited::run()->count(),
             'keyword' => $request->input('keyword'),
         ]);
     }
@@ -55,16 +43,9 @@ class AccreditationController extends Controller
      */
     public function create(UtilityService $utilityService)
     {
-        $units = Unit::query()
-            ->with(['accreditations', 'unitable'])
-            ->whereDoesntHave('accreditations', function ($query): void {
-                $query->where('status', '=', AccreditationStatus::Active);
-            })
-            ->get();
-
         return Inertia::render('Accreditations/Create', [
-            'code' => $utilityService->generateNewCode('AKRE'),
-            'units' => UnitResource::collection($units),
+            'code' => GenerateUniqueCode::run('AKRE'),
+            'units' => UnitResource::collection(GetUnitNotAccredited::run()),
         ]);
     }
 
@@ -79,8 +60,15 @@ class AccreditationController extends Controller
         // TODO : simpan juga file ke dalam database decree
         $upload = Storage::put('decree', $file);
 
-        Accreditation::query()
-            ->create($request->only('code', 'grade', 'due_date', 'unit_id'));
+        $data = AccreditationData::from([
+            'code' => GenerateUniqueCode::run('AKRE'),
+            'grade' => AccreditationGrade::tryFrom($request->input('grade')),
+            'status' => AccreditationStatus::Active,
+            'due_date' => Carbon::create($request->input('due_date')),
+            'unit_id' => $request->input('unit_id'),
+        ]);
+
+        AddNewAccreditation::run($data);
 
         return redirect(route('accreditations.index'));
     }
