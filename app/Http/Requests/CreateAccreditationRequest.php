@@ -41,6 +41,8 @@ class CreateAccreditationRequest extends FormRequest
         return [
             'code.required' => 'Kode harus di isi',
             'code.unique' => 'Kode sudah dimiliki unit lain',
+            'code.max' => 'Kode maksimal 255 karakter',
+            'grade.string' => 'Hasil Akreditasi harus isian yang valid',
             'grade.required' => 'Hasil Akreditasi harus di isi',
             'due_date.required' => 'Masa berlaku harus di isi',
             'due_date.date' => 'Masa berlaku harus format tanggal',
@@ -48,6 +50,9 @@ class CreateAccreditationRequest extends FormRequest
             'release_date.required' => 'Tanggal penerbitan harus di isi',
             'release_date.date' => 'Input tanggal penerbitan harus dalam format tanggl',
             'release_date.before' => 'Input tanggal penerbitan harus sebelum masa berlaku',
+            'unit_id.required' => 'Unit harus di isi',
+            'unit_id.exists' => 'Unit tidak ditemukan',
+            'unit_id.uuid' => 'Unit harus berupa UUID',
             'decree.required' => 'SK Akreditasi harus di isi',
             'decree.file' => 'Input harus pdf',
             'decree.mimes' => 'Input harus pdf',

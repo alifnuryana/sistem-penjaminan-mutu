@@ -15,6 +15,7 @@ use App\Data\UnitData;
 use App\Data\UniversityData;
 use App\Enums\DecreeType;
 use App\Models\University;
+use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Storage;
 
@@ -44,7 +45,7 @@ class UnitSeeder extends Seeder
 
             AttachDecreeableToDecree::run($unitable, DecreeData::from([
                 'code' => GenerateUniqueCode::run('DOC', 10),
-                'name' => 'SK'.' '.$unit['name'],
+                'name' => 'SK ' . $unit['name'],
                 'file_path' => storage_path('/app/decree/sample.pdf'),
                 'size' => Storage::size('decree/sample.pdf'),
                 'type' => DecreeType::Establishment,

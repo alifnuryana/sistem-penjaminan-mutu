@@ -138,7 +138,7 @@
                                             <div class="px-6 py-3">
                                                 <span
                                                     class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                {{ accreditation.unit.name }}
+                                                {{ accreditation.unit.name }} {{ accreditation.unit.unitable.degree}}
                                                 </span>
                                                 <span
                                                     v-if="accreditation.status === 'active'"
@@ -160,10 +160,10 @@
                                             <div class="px-6 py-3">
                                                 <span
                                                     class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                    {{ new Date(accreditation.due_date).toLocaleDateString() }}
+                                                    {{ new Date(accreditation.decree.validity_date).toLocaleDateString() }}
                                             </span>
                                                 <span class="block text-sm text-gray-500">
-                                                    {{ dayjs(accreditation.due_date).fromNow() }}
+                                                    {{ dayjs(accreditation.decree.validity_date).fromNow() }}
                                                 </span>
                                             </div>
                                         </td>

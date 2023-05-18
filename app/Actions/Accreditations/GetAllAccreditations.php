@@ -19,8 +19,8 @@ class GetAllAccreditations
         $query = Accreditation::query()
             ->with([
                 'unit.unitable',
-            ])
-            ->orderBy('due_date');
+                'decree',
+            ]);
 
         if ($paginated) {
             return $query->paginate(10)
