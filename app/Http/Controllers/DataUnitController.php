@@ -72,7 +72,7 @@ class DataUnitController extends Controller
             'name' => $request->get('decree_number'),
             'type' => DecreeType::Establishment,
             'size' => $request->file('decree')->getSize(),
-            'release_date' => Carbon::parse(now()),
+            'release_date' => Carbon::parse($request->get('release_date')),
             'file_path' => $request->get('decree_number') . '.pdf',
             'decreeable_type' => StudyProgram::class,
         ]));
