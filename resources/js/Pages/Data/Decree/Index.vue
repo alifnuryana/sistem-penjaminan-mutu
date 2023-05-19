@@ -86,9 +86,8 @@
                                         </td>
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-1.5">
-                                                <!-- TODO : implementasikan halaman download file -->
-                                                <a class="inline-flex items-center gap-x-1.5 text-sm text-blue-600 decoration-2 hover:underline font-medium"
-                                                   href="#">
+                                                <a target="_blank" class="inline-flex items-center gap-x-1.5 text-sm text-blue-600 decoration-2 hover:underline font-medium"
+                                                   :href="route('data.decrees.file', decree.file_path)">
                                                     Download
                                                 </a>
                                             </div>
@@ -118,6 +117,7 @@ import InputField from "../../../Components/InputField.vue";
 import MainTable from "../../../Components/MainTable.vue";
 import HeaderTable from "../../../Components/HeaderTable.vue";
 import FooterTable from "../../../Components/FooterTable.vue";
+import {Link} from "@inertiajs/vue3";
 
 const props = defineProps({
     decrees: {
