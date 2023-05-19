@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Actions\Decree\AttachDecreeableToDecree;
+use App\Actions\Utilities\GenerateMailNumber;
 use App\Actions\Utilities\GenerateUniqueCode;
 use App\Data\DecreeData;
 use App\Enums\AccreditationStatus;
@@ -28,12 +29,12 @@ class AccreditationSeeder extends Seeder
 
             $data = DecreeData::from([
                 'code' => GenerateUniqueCode::run('DOC', 10),
-                'name' => 'SK Akreditasi '.$accreditation->unit->name,
+                'name' => GenerateMailNumber::run(),
                 'file_path' => storage_path('/app/decree/sample.pdf'),
                 'size' => Storage::size('decree/sample.pdf'),
                 'type' => DecreeType::Accreditation,
                 'decreeable_type' => $accreditation->decree()->getMorphClass(),
-                'release_date' => now(),
+                'release_date' => Carbon::make(fake()->dateTimeBetween('-4 years', '-1 years')),
                 'validity_date' => Carbon::make(fake()->dateTimeBetween('now', '+4 years')),
             ]);
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Actions\Units\GetUnitByAccreditationId;
+use App\Actions\Units\GetUnitByMorhpId;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,6 +24,13 @@ class DecreeResource extends JsonResource
             'release_date' => $this->release_date,
             'validity_date' => $this->validity_date,
             'type' => $this->type,
+            'decreeable' => $this->whenLoaded('decreeable', function () {
+                if ($this->decreeable_type === 'App\Models\StudyProgram' || $this->decreeable_type === 'App\Models\University') {
+                    return UnitResource::make(GetUnitByMorhpId::run($this->decreeable_id));
+                } else {
+                    return UnitResource::make(GetUnitByAccreditationId::run($this->decreeable_id));
+                }
+            }),
         ];
     }
 }

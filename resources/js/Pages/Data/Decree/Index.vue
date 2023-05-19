@@ -1,114 +1,134 @@
 <template>
-    <AppLayout title="Data SK">
+    <AppLayout title="Data Dokumen SK">
+        <!-- Search box -->
+        <div class="max-w-sm">
+            <InputField id="searchbox" name="searchbox" v-model="keyword" placeholder="Pencarian"/>
+        </div>
+        <!-- End Search Box -->
+        <!-- Table Section -->
         <div class="mt-5">
-        <!--card-->
+            <!-- Card -->
             <div class="flex flex-col">
-                <div class="bg-white rounded-lg border border-gray-200 overflow-x-auto">
-                    <!--Header-->
-                    <HeaderTable>
-                        <template v-slot:title>Surat Keputusan (SK)</template>
-                        <template v-slot:description>Seluruh SK yang terdaftar</template>
-                    </HeaderTable>
-                    <!--Table-->
-                    <MainTable>
-                        <template v-slot:head>
-                            <tr class="font-medium">
-                                <th scope="col" class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3 text-left">
-                                    <div class="flex items-center gap-x-2">
-                                            <span
-                                                class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                              Document
-                                            </span>
-                                    </div>
-                                </th>
-                                <th scope="col" class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3 text-left">
-                                    <div class="flex items-center gap-x-2">
-                                            <span
-                                                class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                              Nama
-                                            </span>
-                                    </div>
-                                </th>
-                                <th scope="col" class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3 text-left">
-                                    <div class="flex items-center gap-x-2">
-                                            <span
-                                                class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                              Tipe
-                                            </span>
-                                    </div>
-                                </th>
-                                <th scope="col" class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3 text-left">
-                                    <div class="flex items-center gap-x-2">
-                                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                            Masa Berlaku
-                                        </span>
-                                    </div>
-                                </th>
-                                <th></th>
-                            </tr>
-                        </template>
+                <div class="-m-1.5 overflow-x-auto">
+                    <div class="p-1.5 min-w-full inline-block align-middle">
+                        <div
+                            class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+                            <!-- Header -->
+                            <HeaderTable>
+                                <template v-slot:title>Dokumen SK</template>
+                                <template v-slot:description>Seluruh dokumen yang tersedia di dalam sistem.</template>
+                                <template v-slot:action>
+                                </template>
+                            </HeaderTable>
+                            <!-- End Header -->
 
-                        <template v-slot:body>
-                            <tr v-for="decree in props.decrees">
-                                <td class="h-px w-px whitespace-nowrap">
-                                    <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
-                                        <a :href="route('data.decrees.file', decree.path)" class="group hover:text-blue-500" target="_blank">
-                                            <span class="inline-flex items-center gap-1 group-hover:underline">
-                                                <DocumentIcon class="w-5 h-5"/>
-                                                {{decree.path}}
+                            <!-- Table -->
+                            <MainTable>
+                                <template v-slot:head>
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left">
+                                            <div class="flex items-center gap-x-2">
+                                            <span
+                                                class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                              Informasi File
                                             </span>
+                                            </div>
+                                        </th>
 
-                                        </a>
-                                    </div>
-                                </td>
-                                <td class="h-px w-px whitespace-nowrap">
-                                    <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
+                                        <th scope="col" class="px-6 py-3 text-left">
+                                            <div class="flex items-center gap-x-2">
+                                            <span
+                                                class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                              Unit
+                                            </span>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col" class="px-6 py-3 text-left">
+                                            <div class="flex items-center gap-x-2">
+                                            <span
+                                                class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                              Diterbitkan Pada
+                                            </span>
+                                            </div>
+                                        </th>
+
+                                        <th scope="col" class="px-6 py-3 text-right"></th>
+                                    </tr>
+                                </template>
+
+                                <template v-slot:body>
+                                    <tr v-for="decree in decrees.data" :key="decree.id">
+                                        <td class="h-px w-px whitespace-nowrap">
+                                            <div class="px-6 py-3">
                                             <span class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                {{decree.name}}
+                                                {{ decree.name }}
                                             </span>
-                                    </div>
-                                </td>
-                                <td class="h-px w-px whitespace-nowrap">
-                                    <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
+                                                <span class="block text-sm text-gray-500">{{ decree.type }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="h-px whitespace-nowrap">
+                                            <div class="px-6 py-3">
                                             <span class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                {{decree.type}}
+                                                {{ decree.decreeable.name }}
                                             </span>
-                                    </div>
-                                </td>
-                                <td class="h-px w-px whitespace-nowrap">
-                                    <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
-                                            <span v-if="decree.validity_date != null" :class="[ decree.validity_date > decree.current_date ? 'text-green-500' : 'text-red-500' , 'block text-sm font-semibold']">
-                                                {{decree.validity_date}}
-                                            </span>
-                                            <span v-else class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                Tidak Ada
-                                            </span>
-                                    </div>
-                                </td>
-                                <td class="h-px w-px whitespace-nowrap">
-                                    <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
-                                        <a :href="route('data.decrees.detail', 1)" class=" text-blue-500 font-semibold hover:underline">Detail</a>
-                                    </div>
-                                </td>
-                            </tr>
-                        </template>
-                    </MainTable>
+                                                <span class="block text-sm text-gray-500">
+                                                    {{ decree.decreeable.unitable.degree }}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="h-px whitespace-nowrap">
+                                            <div class="px-6 py-3">
+                                                <span class="block text-sm text-gray-500">
+                                                    {{ new Date(decree.release_date).toLocaleDateString() }}
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td class="h-px w-px whitespace-nowrap">
+                                            <div class="px-6 py-1.5">
+                                                <!-- TODO : implementasikan halaman download file -->
+                                                <a class="inline-flex items-center gap-x-1.5 text-sm text-blue-600 decoration-2 hover:underline font-medium"
+                                                   href="#">
+                                                    Download
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </template>
+                            </MainTable>
+                            <!-- End Table -->
+
+                            <!-- Footer -->
+                            <FooterTable :meta="decrees.meta" :links="decrees.links"/>
+                            <!-- End Footer -->
+                        </div>
+                    </div>
                 </div>
             </div>
-
+            <!-- End Card -->
         </div>
+        <!-- End Table Section -->
     </AppLayout>
 </template>
+
 <script setup>
 import AppLayout from "@/Components/Layouts/AppLayout.vue";
-import HeaderTable from "@/Components/HeaderTable.vue";
-import MainTable from "@/Components/MainTable.vue";
-import {DocumentIcon} from "@heroicons/vue/24/outline/index.js";
+import {useSearchBox} from "../../../Composables/useSearchBox.js";
+import InputField from "../../../Components/InputField.vue";
+import MainTable from "../../../Components/MainTable.vue";
+import HeaderTable from "../../../Components/HeaderTable.vue";
+import FooterTable from "../../../Components/FooterTable.vue";
 
 const props = defineProps({
-    decrees : {
-        default : null,
-        required : true
+    decrees: {
+        type: Object,
+        required: true
+    },
+    keyword: {
+        type: String,
+        default: ''
     }
 });
+
+const {keyword} = useSearchBox(route('data.decrees.index'), props.keyword);
 </script>
