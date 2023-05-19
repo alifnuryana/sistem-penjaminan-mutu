@@ -8,11 +8,8 @@ class GenerateMailNumber
 {
     use AsAction;
 
-    /**
-     * @return string
-     */
     public function handle(): string
     {
-        return 'SK-' . date('Ymd') . '-' . rand(1000, 9999);
+        return 'SK-'.date('Ymd').'-'.rand(1000, 9999);
     }
 }

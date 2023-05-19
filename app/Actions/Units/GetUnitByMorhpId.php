@@ -16,7 +16,7 @@ class GetUnitByMorhpId
             ->with([
                 'unitable',
                 'accreditations.decree',
-                'accreditations.unit'
+                'accreditations.unit',
             ])
             ->where('unitable_id', '=', $uuid)
             ->firstOrFail();

@@ -69,7 +69,7 @@ class AccreditationController extends Controller
         AttachDecreeableToDecree::run($accreditation, DecreeData::from([
             'code' => GenerateUniqueCode::run('DOC'),
             'name' => $request->get('decree_number'),
-            'file_path' => $request->get('decree_number') . '.pdf',
+            'file_path' => $request->get('decree_number').'.pdf',
             'size' => $request->file('decree')->getSize(),
             'type' => DecreeType::Accreditation,
             'decreeable_type' => $accreditation->decree()->getMorphClass(),
@@ -78,7 +78,7 @@ class AccreditationController extends Controller
         ]));
 
         // Upload File to Storage
-        UploadFileToStorage::run('decree/', $request->file('decree'), $request->get('decree_number') . '.pdf');
+        UploadFileToStorage::run('decree/', $request->file('decree'), $request->get('decree_number').'.pdf');
 
         return redirect(route('accreditations.index'));
     }

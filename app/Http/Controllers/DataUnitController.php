@@ -30,8 +30,8 @@ class DataUnitController extends Controller
     public function index(Request $request)
     {
         $units = $request->input('keyword')
-            ? SearchAllUnit::run(TRUE, $request->input('keyword'))
-            : GetAllUnits::run(TRUE);
+            ? SearchAllUnit::run(true, $request->input('keyword'))
+            : GetAllUnits::run(true);
 
         return Inertia::render('Data/Unit/Index', [
             'units' => UnitResource::collection($units),
@@ -73,11 +73,11 @@ class DataUnitController extends Controller
             'type' => DecreeType::Establishment,
             'size' => $request->file('decree')->getSize(),
             'release_date' => Carbon::parse($request->get('release_date')),
-            'file_path' => $request->get('decree_number') . '.pdf',
+            'file_path' => $request->get('decree_number').'.pdf',
             'decreeable_type' => StudyProgram::class,
         ]));
         // Upload File To Storage
-        UploadFileToStorage::run('decree/', $request->file('decree'), $request->get('decree_number') . '.pdf');
+        UploadFileToStorage::run('decree/', $request->file('decree'), $request->get('decree_number').'.pdf');
 
         return redirect()->route('data.units.index')->with('success', 'Unit berhasil ditambahkan.');
     }

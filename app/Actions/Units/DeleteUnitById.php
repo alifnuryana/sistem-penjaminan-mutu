@@ -13,8 +13,6 @@ class DeleteUnitById
 
     /**
      * Delete unit by id.
-     * @param string $uuid
-     * @return void
      */
     public function handle(string $uuid): void
     {

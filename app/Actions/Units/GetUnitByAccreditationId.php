@@ -3,7 +3,6 @@
 namespace App\Actions\Units;
 
 use App\Models\Accreditation;
-use App\Models\Unit;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class GetUnitByAccreditationId

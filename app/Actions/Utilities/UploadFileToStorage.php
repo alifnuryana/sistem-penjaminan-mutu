@@ -12,10 +12,6 @@ class UploadFileToStorage
 
     /**
      * Upload file to storage.
-     * @param string $pathInStorage
-     * @param UploadedFile $file
-     * @param string $fileName
-     * @return void
      */
     public function handle(string $pathInStorage, UploadedFile $file, string $fileName): void
     {

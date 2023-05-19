@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Units\DeleteUnitById;
-use App\Models\Unit;
 use Illuminate\Http\Request;
 
 class MultipleDeleteUnitController extends Controller

@@ -16,7 +16,7 @@ class SearchAllDecree
         $keyword = ucwords($keyword);
         $query = Decree::query()
             ->with([
-                'decreeable'
+                'decreeable',
             ])
             ->where('name', 'like', "%{$keyword}%");
 

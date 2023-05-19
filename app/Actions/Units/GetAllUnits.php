@@ -11,10 +11,6 @@ class GetAllUnits
 {
     use AsAction;
 
-    /**
-     * @param bool $paginated
-     * @return Collection|LengthAwarePaginator
-     */
     public function handle(bool $paginated = false): Collection|LengthAwarePaginator
     {
         $query = Unit::query()
