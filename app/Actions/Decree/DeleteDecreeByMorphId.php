@@ -11,8 +11,10 @@ class DeleteDecreeByMorphId
 
     public function handle(string $uuid): void
     {
-        Decree::query()
+        $decree = Decree::query()
             ->where('decreeable_id', '=', $uuid)
-            ->delete();
+            ->first();
+
+        $decree->delete();
     }
 }
