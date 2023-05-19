@@ -134,6 +134,20 @@
                             </InputError>
                         </div>
                         <!-- End Col -->
+
+                        <div class="col-span-3">
+                            <InputLabel for="release_date" class="mt-3">Penerbitan SK</InputLabel>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <InputField id="release_date" name="release_date" type="date"
+                                        v-model="form.release_date"/>
+                            <InputError id="degree" v-if="form.errors.release_date">
+                                {{ form.errors.release_date }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
                     </div>
                     <!-- End Section -->
 
@@ -172,6 +186,7 @@ const form = useForm({
     degree: "",
     decree_number: "",
     decree: "",
+    release_date: "",
 });
 
 const submit = function () {
