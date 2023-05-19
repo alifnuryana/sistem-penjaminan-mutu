@@ -104,7 +104,7 @@
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
                                             <span class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                {{ unit.name }}
+                                                {{ unit.name }} {{unit.unitable.degree}}
                                             </span>
                                                 <span class="block text-sm text-gray-500">{{ unit.code }}</span>
                                             </div>

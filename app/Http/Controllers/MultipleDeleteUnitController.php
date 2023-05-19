@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Units\DeleteUnitById;
 use App\Models\Unit;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,9 @@ class MultipleDeleteUnitController extends Controller
     {
         $ids = $request->input('ids');
 
-        Unit::whereIn('id', $ids)->delete();
+        foreach ($ids as $id) {
+            DeleteUnitById::run($id);
+        }
 
         return redirect(route('data.units.index'));
     }
