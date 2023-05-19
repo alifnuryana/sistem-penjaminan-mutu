@@ -104,7 +104,7 @@
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
                                             <span class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                {{ unit.name }} {{unit.unitable.degree}}
+                                                {{ unit.name }} {{ unit.unitable.degree }}
                                             </span>
                                                 <span class="block text-sm text-gray-500">{{ unit.code }}</span>
                                             </div>
@@ -120,10 +120,16 @@
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-3">
                                             <span
+                                                v-if="checkAccreditation(unit.accreditations)"
                                                 class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
                                                 <CheckCircleIcon class="w-4 h-4"/>
-                                                <!--TODO: lakukan cek apakah unit tersebut memiliki akreditasi yang aktif atau tidak -->
-                                                Aktif
+                                                Terakreditasi
+                                            </span>
+                                                <span
+                                                    v-else
+                                                    class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+                                                <ExclamationCircleIcon class="w-4 h-4"/>
+                                                    Belum Terakreditasi
                                             </span>
                                             </div>
                                         </td>
@@ -156,7 +162,7 @@
 
 <script setup>
 import AppLayout from "@/Components/Layouts/AppLayout.vue";
-import {CheckCircleIcon, PlusIcon} from "@heroicons/vue/24/solid/index.js";
+import {CheckCircleIcon, PlusIcon, ExclamationCircleIcon} from "@heroicons/vue/24/solid/index.js";
 import {Link, router} from "@inertiajs/vue3";
 import {useMultipleCheckbox} from "../../../Composables/useMultipleCheckbox.js";
 import {useSearchBox} from "../../../Composables/useSearchBox.js";
@@ -178,6 +184,17 @@ const props = defineProps({
 
 const {checkedData, checkAll, isCheckedAll} = useMultipleCheckbox(props.units.data);
 const {keyword} = useSearchBox(route('data.units.index'), props.keyword);
+
+
+const checkAccreditation = function (accreditations) {
+    let isActive = false;
+    accreditations.forEach((accreditation) => {
+        if (accreditation.status === 'active') {
+            isActive = true;
+        }
+    });
+    return isActive;
+};
 
 const deleteCheckedUnit = function () {
     if (confirm('Apakah anda yakin ingin menghapus unit yang dipilih?')) {

@@ -17,6 +17,7 @@ class SearchAllUnit
         $query = Unit::query()
             ->with([
                 'unitable',
+                'accreditations.decree',
             ])
             ->where('name', 'like', "%{$keyword}%");
 

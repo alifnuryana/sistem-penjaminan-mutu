@@ -45,7 +45,7 @@ class HandleInertiaRequests extends Middleware
                 $link = '/'; // Inisialisasi link dengan root page
 
                 foreach ($segments as $segment) {
-                    $link .= $segment.'/'; // Tambahkan segment ke link
+                    $link .= $segment . '/'; // Tambahkan segment ke link
                     $breadcrumb[] = [
                         'text' => ucfirst($segment),
                         'link' => $link,
@@ -54,6 +54,11 @@ class HandleInertiaRequests extends Middleware
 
                 return $breadcrumb;
             },
+            'user' => function () {
+                return auth()->user()
+                    ? auth()->user()->only('id', 'name', 'email')
+                    : null;
+            }
         ]);
     }
 }

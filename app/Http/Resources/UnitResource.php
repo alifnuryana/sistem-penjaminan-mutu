@@ -21,6 +21,7 @@ class UnitResource extends JsonResource
             'email' => $this->email,
             'unitable_type' => $this->unitable_type === 'App\Models\StudyProgram' ? 'Program Studi' : 'PT',
             'unitable' => $this->unitable_type === 'App\Models\StudyProgram' ? StudyProgramResource::make($this->unitable) : UniversityResource::make($this->unitable),
+            'accreditations' => $this->whenLoaded('accreditations', fn() => AccreditationResource::collection($this->accreditations)),
         ];
     }
 }

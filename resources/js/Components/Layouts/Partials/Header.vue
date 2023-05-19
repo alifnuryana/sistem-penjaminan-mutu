@@ -25,8 +25,7 @@
                             aria-labelledby="hs-dropdown-with-header">
                             <div class="py-3 px-5 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700">
                                 <p class="text-sm text-gray-500 dark:text-gray-400">Masuk sebagai</p>
-                                <!-- TODO: implementasikan shared data dan mengambil instance user pada shared data -->
-                                <p class="text-sm font-medium text-gray-800 dark:text-gray-300">james@site.com</p>
+                                <p class="text-sm font-medium text-gray-800 dark:text-gray-300">{{page.props.user.email}}</p>
                             </div>
                             <div class="mt-2 py-2 first:pt-0 last:pb-0">
                                 <Link :href="route('logout')"
@@ -46,6 +45,8 @@
 </template>
 
 <script setup>
-import {Link} from "@inertiajs/vue3";
+import {Link, usePage} from "@inertiajs/vue3";
 import {ArrowLeftOnRectangleIcon} from "@heroicons/vue/24/outline/index.js";
+
+const page = usePage();
 </script>
