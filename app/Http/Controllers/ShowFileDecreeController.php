@@ -10,9 +10,15 @@ class ShowFileDecreeController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke($path)
     {
-        /* TODO : ini masih error coba fix */
-        return Storage::response($request->input('path'));
+        $storagePath = Storage::path($path);
+//        return response()->file($storagePath);
+
+        $content =  Storage::disk('local')->get($path);
+        $http_response_header =[
+            'Content-Type' => 'application/pdf'
+        ];
+        return response($content, 200, $http_response_header);
     }
 }
