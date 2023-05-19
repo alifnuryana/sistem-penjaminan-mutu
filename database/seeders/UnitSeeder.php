@@ -6,6 +6,7 @@ use App\Actions\Decree\AttachDecreeableToDecree;
 use App\Actions\StudyPrograms\AddNewStudyProgram;
 use App\Actions\Units\AttachUnitableToUnit;
 use App\Actions\Universities\AddNewUniversity;
+use App\Actions\Utilities\GenerateMailNumber;
 use App\Actions\Utilities\GenerateUniqueCode;
 use App\Actions\Utilities\GetUnitsDummyData;
 use App\Actions\Utilities\LoadSamplePdf;
@@ -45,12 +46,12 @@ class UnitSeeder extends Seeder
 
             AttachDecreeableToDecree::run($unitable, DecreeData::from([
                 'code' => GenerateUniqueCode::run('DOC', 10),
-                'name' => 'SK ' . $unit['name'],
+                'name' => GenerateMailNumber::run(),
                 'file_path' => storage_path('/app/decree/sample.pdf'),
                 'size' => Storage::size('decree/sample.pdf'),
                 'type' => DecreeType::Establishment,
                 'decreeable_type' => $unitable->decree()->getMorphClass(),
-                'release_date' => now(),
+                'release_date' => Carbon::make(fake()->dateTimeBetween('-4 years', '-1 years')),
             ]));
 
             AttachUnitableToUnit::run($unitable, UnitData::from([
