@@ -27,7 +27,7 @@ class CreateUnitRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:100', 'unique:units,email', 'ends_with:@widyatama.ac.id'],
             'degree' => ['required', 'string', 'max:5'],
             'decree' => ['required', 'file', 'mimes:pdf', 'max:2048'],
-            'decree_number' => ['required', 'string', 'max:50'],
+            'decree_number' => ['required', 'string', 'max:50', 'unique:decrees,name'],
             'release_date' => ['required', 'date', 'before:today'],
         ];
     }
@@ -53,6 +53,7 @@ class CreateUnitRequest extends FormRequest
             'decree.max' => 'Maksimal ukuran file 2048KB',
             'decree_number.required' => 'Nomor SK harus di isi',
             'decree_number.max' => 'Nomor SK maksimal 50 karakter',
+            'decree_number.unique' => 'Nomor SK sudah dimiliki unit lain',
             'release_date.required' => 'Tanggal penerbitan harus di isi',
             'release_date.date' => 'Input tanggal penerbitan harus dalam format tanggal',
             'release_date.before' => 'Input tanggal penerbitan harus sebelum hari ini',

@@ -64,7 +64,7 @@ class DataUnitController extends Controller
             'name' => $request->get('name'),
             'code' => $request->get('code'),
             'email' => $request->get('email'),
-            'unitable_type' => $studyProgram::class,
+            'unitable_type' => 'App\Models\StudyProgram',
         ]));
         // Attach StudyProgram to Decree
         AttachDecreeableToDecree::run($studyProgram, DecreeData::from([
