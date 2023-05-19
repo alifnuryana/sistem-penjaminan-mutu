@@ -83,7 +83,6 @@ return [
     |
     */
 
-    /* TODO : konfigurasikan locale aplikasi dengan indonesia */
     'locale' => 'id',
 
     /*

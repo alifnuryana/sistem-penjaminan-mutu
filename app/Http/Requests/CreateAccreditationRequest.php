@@ -32,7 +32,6 @@ class CreateAccreditationRequest extends FormRequest
         ];
     }
 
-    /* TODO : tambahkan fungsi messages untuk validation */
     /**
      * @return string[]
      */
