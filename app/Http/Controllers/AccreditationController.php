@@ -68,8 +68,8 @@ class AccreditationController extends Controller
         // Attach Accreditation to Decree
         AttachDecreeableToDecree::run($accreditation, DecreeData::from([
             'code' => GenerateUniqueCode::run('DOC'),
-            'name' => $request->get('decree_number'),
-            'file_path' => $request->get('decree_number') . '.pdf',
+            'name' => str_replace('\\', '-',  $request->get('decree_number')),
+            'file_path' => 'decree\\' . str_replace('\\', '-',  $request->get('decree_number')) . '.pdf',
             'size' => $request->file('decree')->getSize(),
             'type' => DecreeType::Accreditation,
             'decreeable_type' => $accreditation->decree()->getMorphClass(),
