@@ -16,6 +16,7 @@ class GetAllUnits
         $query = Unit::query()
             ->with([
                 'unitable',
+                'accreditations.decree',
             ]);
 
         if ($paginated) {
