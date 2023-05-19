@@ -2,7 +2,7 @@
 
 namespace App\Actions\Accreditations;
 
-use App\Models\Accreditation;
+use App\Actions\Decree\DeleteDecreeByMorphId;
 use Lorisleiva\Actions\Concerns\AsAction;
 
 class DeleteAccreditation
@@ -11,7 +11,10 @@ class DeleteAccreditation
 
     public function handle(string $uuid): void
     {
-        $accreditation = Accreditation::where('id', '=', $uuid)->firstOrFail();
+        $accreditation = GetAccreditationById::run($uuid);
+
+        // Delete SK Akreditasi
+        DeleteDecreeByMorphId::run($uuid);
 
         $accreditation->delete();
     }
