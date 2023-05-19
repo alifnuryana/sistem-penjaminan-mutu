@@ -6,9 +6,9 @@ use App\Actions\Accreditations\AddNewAccreditation;
 use App\Actions\Accreditations\GetAllAccreditations;
 use App\Actions\Accreditations\SearchAllAccreditations;
 use App\Actions\Decree\AttachDecreeableToDecree;
-use App\Actions\Units\GetUnitById;
 use App\Actions\Units\GetUnitNotAccredited;
 use App\Actions\Utilities\GenerateUniqueCode;
+use App\Actions\Utilities\UploadFileToStorage;
 use App\Data\AccreditationData;
 use App\Data\DecreeData;
 use App\Enums\AccreditationGrade;
@@ -20,7 +20,6 @@ use App\Http\Resources\UnitResource;
 use App\Models\Accreditation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class AccreditationController extends Controller
@@ -57,33 +56,29 @@ class AccreditationController extends Controller
      */
     public function store(CreateAccreditationRequest $request)
     {
-        $file = $request->file('decree');
-
-        Storage::put($file->getClientOriginalName(), file_get_contents($file->getRealPath()));
-
-        $data = AccreditationData::from([
+        // Create Accreditation
+        $accreditation = AddNewAccreditation::run(AccreditationData::from([
             'code' => GenerateUniqueCode::run('AKRE'),
             'grade' => AccreditationGrade::tryFrom($request->input('grade')),
             'status' => AccreditationStatus::Active,
             'due_date' => Carbon::create($request->input('due_date')),
             'unit_id' => $request->input('unit_id'),
-        ]);
+        ]));
 
-        $accreditation = AddNewAccreditation::run($data);
-
-        $data = DecreeData::from([
+        // Attach Accreditation to Decree
+        AttachDecreeableToDecree::run($accreditation, DecreeData::from([
             'code' => GenerateUniqueCode::run('DOC'),
-            /* TODO : jika field itu unique dan ingin digenerate oleh sistem paling tidak hasil generate nya unique juga dong. seperti kode di atas ini */
-            'name' => 'SK Akreditasi'.GetUnitById::run($request->input('unit_id'))->name,
-            'file_path' => $file->getClientOriginalName(),
+            'name' => $request->get('decree_number'),
+            'file_path' => $request->get('decree_number') . '.pdf',
             'size' => $request->file('decree')->getSize(),
             'type' => DecreeType::Accreditation,
             'decreeable_type' => $accreditation->decree()->getMorphClass(),
             'release_date' => Carbon::create($request->input('release_date')),
             'validity_date' => Carbon::create($request->input('due_date')),
-        ]);
+        ]));
 
-        AttachDecreeableToDecree::run($accreditation, $data);
+        // Upload File to Storage
+        UploadFileToStorage::run('decree/', $request->file('decree'), $request->get('decree_number') . '.pdf');
 
         return redirect(route('accreditations.index'));
     }
