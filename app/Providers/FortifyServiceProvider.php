@@ -46,5 +46,20 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::loginView(function () {
             return Inertia::render('Auth/Login');
         });
+
+                                        //Forgot Password
+
+        Fortify::requestPasswordResetLinkView(function () {
+            return Inertia::render('Auth/RequestResetPassword');
+        });
+
+        //todo : change request with request form to validate only widyatama email can be sent
+        Fortify::resetPasswordView(function (Request $request){
+            return Inertia::render('Auth/ResetPassword', [
+                'request' => $request,
+                'token' => $request->route('token')
+
+            ]);
+        });
     }
 }
