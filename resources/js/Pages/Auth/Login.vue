@@ -36,9 +36,8 @@
                                 <div>
                                     <div class="flex justify-between items-center">
                                         <InputLabel for="password">Password</InputLabel>
-                                        <!-- TODO : implementasi lupa password -->
                                         <a class="text-sm text-blue-600 decoration-2 hover:underline font-medium"
-                                           href="../examples/html/recover-account.html">Lupa password?</a>
+                                           :href="route('password.request')">Lupa password?</a>
                                     </div>
                                     <InputField id="password" name="password" type="password" v-model="form.password"
                                                 :error="form.errors.password"/>
