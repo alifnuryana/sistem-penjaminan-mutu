@@ -135,10 +135,9 @@
                                         </td>
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-1.5">
-                                                <!-- TODO : implementasikan halaman detail unit -->
                                                 <a class="inline-flex items-center gap-x-1.5 text-sm text-blue-600 decoration-2 hover:underline font-medium"
-                                                   href="#">
-                                                    Detail
+                                                   :href="route('data.units.show', unit.code)">
+                                                    detail
                                                 </a>
                                             </div>
                                         </td>
