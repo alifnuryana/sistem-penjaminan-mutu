@@ -17,6 +17,7 @@ class UniversityResource extends JsonResource
         return [
             'id' => $this->id,
             'address' => $this->address,
+            'decree' => $this->whenLoaded('decree'), fn() => DecreeResource::make($this->decree)
         ];
     }
 }
