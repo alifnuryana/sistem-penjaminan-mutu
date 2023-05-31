@@ -85,9 +85,13 @@ class DataUnitController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Unit $unit)
+    public function show(string $code)
     {
-        //
+        $unit = Unit::with(['accreditations.decree', 'unitable.decree'])->whereCode($code)->first();
+        $unitData = UnitResource::make($unit);
+        return Inertia::render('Data/Unit/Detail', [
+            'unitData' => $unitData
+        ]);
     }
 
     /**
