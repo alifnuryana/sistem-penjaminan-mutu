@@ -23,7 +23,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('data')->as('data.')->group(function () {
         Route::delete('units/destroys', MultipleDeleteUnitController::class)->name('units.destroys');
-        Route::resource('units', DataUnitController::class)->only('index', 'create', 'store');
+        Route::resource('units', DataUnitController::class)->only('index', 'create', 'store', 'show');
         Route::get('/decrees', IndexDecreeController::class)->name('decrees.index');
         Route::get('/decrees/detail', DetailDecreeController::class)->name('decrees.detail');
         Route::get('/decress/file/{path}', ShowFileDecreeController::class)->name('decrees.file');
