@@ -18,7 +18,9 @@ Route::middleware(['auth'])->group(function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
 
-    Route::resource('accreditations', AccreditationController::class)->only('index', 'create', 'store');
+    Route::get('/accreditations', [AccreditationController::class, 'index'])->name('accreditations.index');
+    Route::get('/accreditations/create', [AccreditationController::class, 'create'])->name('accreditations.create');
+    Route::post('/accreditations', [AccreditationController::class, 'store'])->name('accreditations.store');
     Route::delete('accreditations/destroys', MultipleDeleteAccreditationController::class)->name('accreditations.destroys');
 
     Route::prefix('data')->as('data.')->group(function () {
