@@ -3,11 +3,13 @@
 namespace Database\Seeders;
 
 use App\Actions\Decree\AttachDecreeableToDecree;
+use App\Actions\Notifications\CreateNewNotification;
 use App\Actions\Utilities\GenerateMailNumber;
 use App\Actions\Utilities\GenerateUniqueCode;
 use App\Data\DecreeData;
 use App\Enums\AccreditationStatus;
 use App\Enums\DecreeType;
+use App\Enums\NotificationStatus;
 use App\Models\Accreditation;
 use App\Models\Unit;
 use Carbon\Carbon;
@@ -16,9 +18,6 @@ use Illuminate\Support\Facades\Storage;
 
 class AccreditationSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         Unit::all()->each(function (Unit $unit): void {
@@ -39,6 +38,8 @@ class AccreditationSeeder extends Seeder
             ]);
 
             AttachDecreeableToDecree::run($accreditation, $data);
+
+            CreateNewNotification::run($accreditation, 10);
         });
     }
 }
