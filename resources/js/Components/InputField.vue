@@ -6,7 +6,7 @@
                @input="$emit('update:modelValue', $event.target.value)"
                :placeholder="placeholder"
                :readonly="readonly"
-               :min:="min"
+               :min="min"
                required :aria-describedby="`${id}-error`">
         <div
             :class="validationClass">

@@ -72,7 +72,7 @@
                             <!-- TODO : jadikan select input sebagai komponen terpisah -->
                             <select id="degree"
                                     v-model="form.degree"
-                                    class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                    class="py-3 px-4 block w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
                                 <option selected></option>
                                 <option value="D3">D3</option>
                                 <option value="D4">D4</option>

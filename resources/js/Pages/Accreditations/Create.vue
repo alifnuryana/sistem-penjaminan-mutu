@@ -41,7 +41,7 @@
                             <select id="unit_id"
                                     v-model="form.unit_id"
                                     :disabled="units.length === 0"
-                                    class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                    class="py-3 px-4 block w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
                                 <option selected></option>
                                 <option v-for="unit in units" :key="unit.id" :value="unit.id">
                                     {{ unit.name }} - {{ unit.unitable.degree }}
@@ -64,7 +64,7 @@
                         <div class="col-span-9">
                             <select id="grade"
                                     v-model="form.grade"
-                                    class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                    class="py-3 px-4 block w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
                                 <option selected></option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>
