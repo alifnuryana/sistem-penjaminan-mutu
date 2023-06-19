@@ -31,7 +31,7 @@
                 <hr class="col-span-4">
                 <h3 class="font-medium">SK Pendirian</h3>
                 <div class="col-span-3">
-                    <a :href="route('data.decrees.file', props.unitData.unitable.decrees.file_path)" class="text-blue-500 hover:text-blue-900" target="_blank">download</a>
+                    <a :href="route('data.decrees.file', props.unitData.unitable.decree.file_path)" class="text-blue-500 hover:text-blue-900" target="_blank">download</a>
                 </div>
                 <hr class="col-span-4">
             </div>
