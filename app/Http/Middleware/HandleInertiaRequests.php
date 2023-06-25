@@ -58,7 +58,8 @@ class HandleInertiaRequests extends Middleware
                 return auth()->user()
                     ? auth()->user()->only('id', 'name', 'email')
                     : null;
-            }
+            },
+            'csrf_token' => fn() => csrf_token(),
         ]);
     }
 }
