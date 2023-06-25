@@ -3,11 +3,11 @@
         <!-- Card Section -->
         <div class="max-w-5xl w-full">
             <!-- Card -->
-            <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
+            <div class="bg-white rounded-xl border border-gray-200 p-4 sm:p-7 dark:bg-gray-800 dark:border-gray-700">
                 <form @submit.prevent="submit">
                     <!-- Section -->
                     <div
-                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
+                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 first:border-transparent border-gray-200 dark:border-gray-700">
                         <div class="col-span-12">
                             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
                                 Informasi Dasar
@@ -69,10 +69,9 @@
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <!-- TODO : jadikan select input sebagai komponen terpisah -->
                             <select id="degree"
                                     v-model="form.degree"
-                                    class="py-3 px-4 block w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
+                                    class="py-3 px-4 block border-gray-200  w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
                                 <option selected></option>
                                 <option value="D3">D3</option>
                                 <option value="D4">D4</option>
