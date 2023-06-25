@@ -79,7 +79,7 @@
                                         </td>
                                         <td class="h-px whitespace-nowrap">
                                             <div class="px-6 py-3">
-                                                <span class="block text-sm text-gray-500">
+                                                <span class="block text-sm text-gray-800 dark:text-gray-200">
                                                     {{ new Date(decree.release_date).toLocaleDateString() }}
                                                 </span>
                                             </div>
@@ -117,7 +117,6 @@ import InputField from "../../../Components/InputField.vue";
 import MainTable from "../../../Components/MainTable.vue";
 import HeaderTable from "../../../Components/HeaderTable.vue";
 import FooterTable from "../../../Components/FooterTable.vue";
-import {Link} from "@inertiajs/vue3";
 
 const props = defineProps({
     decrees: {

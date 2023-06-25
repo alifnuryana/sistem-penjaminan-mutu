@@ -2,11 +2,11 @@
     <AppLayout title="Catat Akreditasi">
         <div class="max-w-5xl w-full">
             <!-- Card -->
-            <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
+            <div class="bg-white rounded-xl border border-gray-200 p-4 sm:p-7 dark:bg-gray-800 dark:border-gray-700">
                 <form @submit.prevent="submit">
                     <!-- Section -->
                     <div
-                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
+                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 first:border-transparent border-gray-200 dark:border-gray-700">
                         <div class="col-span-12">
                             <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
                                 Informasi Dasar
@@ -41,13 +41,14 @@
                             <select id="unit_id"
                                     v-model="form.unit_id"
                                     :disabled="units.length === 0"
-                                    class="py-3 px-4 block w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
+                                    class="py-3 border-gray-200  px-4 block w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
                                 <option selected></option>
                                 <option v-for="unit in units" :key="unit.id" :value="unit.id">
                                     {{ unit.name }} - {{ unit.unitable.degree }}
                                 </option>
                             </select>
-                            <p class="text-sm text-gray-500 mt-2" v-if="units.length === 0">Seluruh unit telah memiliki akreditasi.</p>
+                            <p class="text-sm text-gray-500 mt-2" v-if="units.length === 0">Seluruh unit telah memiliki
+                                akreditasi.</p>
                             <InputError id="unit_id" v-if="form.errors.unit_id">
                                 {{ form.errors.unit_id }}
                             </InputError>
@@ -64,7 +65,7 @@
                         <div class="col-span-9">
                             <select id="grade"
                                     v-model="form.grade"
-                                    class="py-3 px-4 block w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
+                                    class="py-3 px-4 block border-gray-200  w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400">
                                 <option selected></option>
                                 <option value="A">A</option>
                                 <option value="B">B</option>

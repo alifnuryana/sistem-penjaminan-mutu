@@ -42,7 +42,7 @@
                                                 leave-from-class="opacity-100"
                                                 leave-to-class="transform opacity-0"
                                     >
-                                        <button v-if="checkedData.length >= 1" as="button"
+                                        <button v-if="checkedData.length >= 1"
                                                 @click="deleteCheckedAccreditation"
                                                 class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-red-500 text-white hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                                         >
@@ -129,7 +129,7 @@
                                         </td>
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
-                                                <span class="block text-sm text-gray-500">
+                                                <span class="block text-sm text-gray-800 dark:text-gray-300">
                                                     {{ accreditation.code }}
                                                 </span>
                                             </div>
@@ -137,8 +137,8 @@
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-3">
                                                 <span
-                                                    class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                {{ accreditation.unit.name }} {{ accreditation.unit.unitable.degree}}
+                                                    class="block text-sm font-semibold text-gray-800 dark:text-gray-300">
+                                                {{ accreditation.unit.name }} {{ accreditation.unit.unitable.degree }}
                                                 </span>
                                                 <span
                                                     v-if="accreditation.status === 'active'"
@@ -151,7 +151,7 @@
                                         </td>
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-3">
-                                                <span class="block text-sm text-gray-500">
+                                                <span class="block text-sm text-gray-800 dark:text-gray-300">
                                                     {{ accreditation.grade }}
                                                 </span>
                                             </div>
@@ -159,8 +159,10 @@
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-3">
                                                 <span
-                                                    class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
-                                                    {{ new Date(accreditation.decree.validity_date).toLocaleDateString() }}
+                                                    class="block text-sm font-semibold text-gray-800 dark:text-gray-300">
+                                                    {{
+                                                        new Date(accreditation.decree.validity_date).toLocaleDateString()
+                                                    }}
                                             </span>
                                                 <span class="block text-sm text-gray-500">
                                                     {{ dayjs(accreditation.decree.validity_date).fromNow() }}
@@ -223,7 +225,7 @@ const props = defineProps({
         default: '',
     },
     unitNotAccreditedCount: {
-        type: String,
+        type: Number,
         required: true,
     }
 });
