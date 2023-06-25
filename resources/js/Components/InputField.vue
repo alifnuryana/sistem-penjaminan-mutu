@@ -7,6 +7,7 @@
                :placeholder="placeholder"
                :readonly="readonly"
                :min="min"
+               autocomplete="off"
                required :aria-describedby="`${id}-error`">
         <div
             :class="validationClass">
