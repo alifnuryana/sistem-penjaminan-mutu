@@ -105,14 +105,13 @@
                         <div class="col-span-9">
                             <!-- TODO : jadikan file input sebagai komponen terpisah -->
                             <label class="block">
-                                <input type="file" id="decree" name="decree"
-                                       @input="form.decree = $event.target.files[0]" class="block w-full text-sm text-gray-500
-                                  file:mr-4 file:py-2 file:px-4
-                                  file:rounded-md file:border-0
-                                  file:text-sm file:font-semibold
-                                  file:bg-blue-500 file:text-white
-                                  hover:file:bg-blue-600
-                                "/>
+                                <FilePond name="decree"
+                                          ref="decreeFileInput"
+                                          allow-multiple="true"
+                                          accepted-file-types="application/pdf"
+                                          @init="handleFilePondInit"
+                                          @processfile="handleAddPondFiles"
+                                          @removefile="handleRemovePondFiles"/>
                             </label>
                             <InputError id="decree" v-if="form.errors.decree">
                                 {{ form.errors.decree }}
@@ -150,6 +149,7 @@
                     </div>
                     <!-- End Section -->
 
+
                     <div class="flex w-full justify-end">
                         <PrimaryButton type="submit">
                             Submit
@@ -169,7 +169,33 @@ import InputLabel from "../../../Components/InputLabel.vue";
 import InputField from "../../../Components/InputField.vue";
 import InputError from "../../../Components/InputError.vue";
 import PrimaryButton from "../../../Components/PrimaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
+import vueFilepondEsm, {setOptions} from "vue-filepond";
+
+import FilePondPluginFileValidateType
+    from 'filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.esm.js';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.esm.js';
+
+import 'filepond/dist/filepond.min.css';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import {ref} from "vue";
+
+
+const FilePond = vueFilepondEsm(FilePondPluginFileValidateType, FilePondPluginImagePreview);
+
+console.log(usePage().props.csrf_token)
+
+function handleFilePondInit() {
+    setOptions({
+        credits: false,
+        server: {
+            url: '/filepond',
+            headers: {
+                'X-CSRF-TOKEN': usePage().props.csrf_token,
+            }
+        }
+    })
+}
 
 const props = defineProps({
     code: {
@@ -178,17 +204,41 @@ const props = defineProps({
     }
 });
 
+const decreeFileInput = ref();
 const form = useForm({
     code: props.code,
     name: "",
     email: "",
     degree: "",
     decree_number: "",
-    decree: "",
+    decree: [],
     release_date: "",
 });
 
+const handleAddPondFiles = (error, file) => {
+    console.log('hit');
+    form.decree.push({id: file.id, serverId: file.serverId});
+    console.log(form.decree);
+}
+
+const handleRemovePondFiles = (error, file) => {
+    form.decree = form.decree.filter((item) => item.id !== file.id);
+}
+
 const submit = function () {
-    form.post(route('data.units.store'))
+    form
+        .transform((data) => {
+            return {
+                ...data,
+                decree: data.decree.map(item => item.serverId)
+            }
+        })
+        .post(route('data.units.store'), {
+            onSuccess: () => {
+                decreeFileInput.value.removeFiles();
+            }
+        })
+
+    // form.post(route('data.units.store'))
 };
 </script>
