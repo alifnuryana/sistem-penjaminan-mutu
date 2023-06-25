@@ -129,7 +129,7 @@
                                         </td>
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="pl-6 lg:pl-3 xl:pl-3 pr-6 py-3">
-                                                <span class="block text-sm text-gray-500">
+                                                <span class="block text-sm text-gray-800 dark:text-gray-300">
                                                     {{ accreditation.code }}
                                                 </span>
                                             </div>
@@ -137,7 +137,7 @@
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-3">
                                                 <span
-                                                    class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
+                                                    class="block text-sm font-semibold text-gray-800 dark:text-gray-300">
                                                 {{ accreditation.unit.name }} {{ accreditation.unit.unitable.degree}}
                                                 </span>
                                                 <span
@@ -151,7 +151,7 @@
                                         </td>
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-3">
-                                                <span class="block text-sm text-gray-500">
+                                                <span class="block text-sm text-gray-800 dark:text-gray-300">
                                                     {{ accreditation.grade }}
                                                 </span>
                                             </div>
@@ -159,7 +159,7 @@
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-3">
                                                 <span
-                                                    class="block text-sm font-semibold text-gray-800 dark:text-gray-200">
+                                                    class="block text-sm font-semibold text-gray-800 dark:text-gray-300">
                                                     {{ new Date(accreditation.decree.validity_date).toLocaleDateString() }}
                                             </span>
                                                 <span class="block text-sm text-gray-500">
@@ -223,7 +223,7 @@ const props = defineProps({
         default: '',
     },
     unitNotAccreditedCount: {
-        type: String,
+        type: Number,
         required: true,
     }
 });
