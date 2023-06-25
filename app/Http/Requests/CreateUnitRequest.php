@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateUnitRequest extends FormRequest
 {
@@ -26,7 +27,8 @@ class CreateUnitRequest extends FormRequest
             'name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:100', 'unique:units,email', 'ends_with:@widyatama.ac.id'],
             'degree' => ['required', 'string', 'max:5'],
-            'decree' => ['required', 'file', 'mimes:pdf', 'max:2048'],
+            'decree' => ['required'],
+            'decree.*' => ['required', Rule::filepond(['max:5000', 'mimes:pdf'])],
             'decree_number' => ['required', 'string', 'max:50', 'unique:decrees,name'],
             'release_date' => ['required', 'date', 'before:today'],
         ];

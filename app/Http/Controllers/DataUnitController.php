@@ -8,7 +8,6 @@ use App\Actions\Units\AttachUnitableToUnit;
 use App\Actions\Units\GetAllUnits;
 use App\Actions\Units\SearchAllUnit;
 use App\Actions\Utilities\GenerateUniqueCode;
-use App\Actions\Utilities\UploadFileToStorage;
 use App\Data\DecreeData;
 use App\Data\StudyProgramData;
 use App\Data\UnitData;
@@ -21,6 +20,7 @@ use App\Models\University;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use RahulHaque\Filepond\Facades\Filepond;
 
 class DataUnitController extends Controller
 {
@@ -54,11 +54,17 @@ class DataUnitController extends Controller
      */
     public function store(CreateUnitRequest $request)
     {
+        // Old way
+        // Upload File To Storage
+        // UploadFileToStorage::run('decree/', $request->file('decree'), $request->get('decree_number').'.pdf');
+        $decreeInfo = Filepond::field($request->decree)->moveTo('/decrees/' . $request->get('decree_number'));
+
         // Create StudyProgram
         $studyProgram = AddNewStudyProgram::run(StudyProgramData::from([
             'degree' => $request->get('degree'),
             'university_id' => University::first()->id,
         ]));
+
         // Attach StudyProgram to Unit
         AttachUnitableToUnit::run($studyProgram, UnitData::from([
             'name' => $request->get('name'),
@@ -66,19 +72,19 @@ class DataUnitController extends Controller
             'email' => $request->get('email'),
             'unitable_type' => 'App\Models\StudyProgram',
         ]));
-        // Attach StudyProgram to Decree
-        AttachDecreeableToDecree::run($studyProgram, DecreeData::from([
-            'code' => GenerateUniqueCode::run('SK'),
-            'name' => $request->get('decree_number'),
-            'type' => DecreeType::Establishment,
-            'size' => $request->file('decree')->getSize(),
-            'release_date' => Carbon::parse($request->get('release_date')),
-            'file_path' => $request->get('decree_number').'.pdf',
-            'decreeable_type' => StudyProgram::class,
-        ]));
-        // Upload File To Storage
-        UploadFileToStorage::run('decree/', $request->file('decree'), $request->get('decree_number').'.pdf');
 
+        // Attach StudyProgram to Decree
+        foreach ($decreeInfo as $decree) {
+            AttachDecreeableToDecree::run($studyProgram, DecreeData::from([
+                'code' => GenerateUniqueCode::run('SK'),
+                'name' => $decree['filename'],
+                'type' => DecreeType::Establishment,
+                'size' => 2000,
+                'release_date' => Carbon::parse($request->get('release_date')),
+                'file_path' => $decree['basename'],
+                'decreeable_type' => StudyProgram::class,
+            ]));
+        }
         return redirect()->route('data.units.index')->with('success', 'Unit berhasil ditambahkan.');
     }
 
