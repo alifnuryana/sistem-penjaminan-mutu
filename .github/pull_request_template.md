@@ -1,33 +1,38 @@
-### 🛠 Changes being made
+### ✨ Description 
 
-Here give examples of the changes you've made in this pull request. Include an itemized list if you can. It'll help the reviewer
+Please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change.
 
-### ✨ What's the context?
+Fixes # (issue)
 
-What's the context for the changes? Are there any
+### 🛠 Type of change 
 
-[//]: # (### 🧠 Rationale behind the change)
+Please delete options that are not relevant.
 
-[//]: # ()
-[//]: # (Why did you choose to make these changes? Were there any trade-offs you had to consider?)
+- [ ] Bug fix (non-breaking change which fixes an issue)
+- [ ] New feature (non-breaking change which adds functionality)
+- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] This change requires a documentation update
 
-[//]: # ()
-[//]: # (### 🧪 Test plan)
+### 🧪 How Has This Been Tested?
 
-[//]: # ()
-[//]: # (How do you know the changes are safe to ship to production?)
+Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
 
-[//]: # ()
-[//]: # (### 📸 Screenshots &#40;optional&#41;)
+- [ ] Test A
+- [ ] Test B
 
-[//]: # ()
-[//]: # (If you made UI changes, what are the before an afters?)
+**Test Configuration**:
+* Firmware version:
+* Hardware:
+* Toolchain:
+* SDK:
 
-[//]: # ()
-[//]: # (### 🏎 Quality check)
+### ✅ Checklist:
 
-[//]: # (- [ ] Are your changes following SOLID principles?)
-
-[//]: # (- [ ] Are there any erroneous console logs, debuggers or leftover code in your changes?)
-
-[//]: # (- [ ] Walk away, take a break, re-read what you filled out above does it make sense if you were coming in cold? What extra context could you provide?)
+- [ ] My code follows the style guidelines of this project
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have added tests that prove my fix is effective or that my feature works
+- [ ] New and existing unit tests pass locally with my changes
+- [ ] Any dependent changes have been merged and published in downstream modules
