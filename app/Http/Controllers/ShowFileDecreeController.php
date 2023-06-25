@@ -12,7 +12,7 @@ class ShowFileDecreeController extends Controller
     public function __invoke(string $path)
     {
         return \response()->file(
-            Storage::path('decree/' . $path)
+            Storage::disk('public')->path('decrees/' . $path)
         );
     }
 }
