@@ -21,7 +21,11 @@
         "@inertiajs/vue3": "^1.0.6",
         "@vueuse/core": "^10.2.0",
         "dayjs": "^1.11.7",
+        "filepond": "^4.30.4",
+        "filepond-plugin-file-validate-type": "^1.2.8",
+        "filepond-plugin-image-preview": "^4.6.11",
         "preline": "^1.8.0",
-        "vue": "^3.3.2"
+        "vue": "^3.3.2",
+        "vue-filepond": "^7.0.3"
     }
 }
