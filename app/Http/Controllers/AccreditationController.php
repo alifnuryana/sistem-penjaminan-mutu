@@ -7,8 +7,8 @@ use App\Actions\Accreditations\GetAllAccreditations;
 use App\Actions\Accreditations\SearchAllAccreditations;
 use App\Actions\Decree\AttachDecreeableToDecree;
 use App\Actions\Units\GetUnitNotAccredited;
+use App\Actions\Utilities\FilePondUpload;
 use App\Actions\Utilities\GenerateUniqueCode;
-use App\Actions\Utilities\UploadFileToStorage;
 use App\Data\AccreditationData;
 use App\Data\DecreeData;
 use App\Enums\AccreditationGrade;
@@ -56,6 +56,8 @@ class AccreditationController extends Controller
      */
     public function store(CreateAccreditationRequest $request)
     {
+        $decreeInfo = FilePondUpload::run($request->decree, '/decrees/', $request->get('decree_number'));
+
         // Create Accreditation
         $accreditation = AddNewAccreditation::run(AccreditationData::from([
             'code' => GenerateUniqueCode::run('AKRE'),
@@ -66,19 +68,18 @@ class AccreditationController extends Controller
         ]));
 
         // Attach Accreditation to Decree
-        AttachDecreeableToDecree::run($accreditation, DecreeData::from([
-            'code' => GenerateUniqueCode::run('DOC'),
-            'name' => $request->get('decree_number'),
-            'file_path' => $request->get('decree_number').'.pdf',
-            'size' => $request->file('decree')->getSize(),
-            'type' => DecreeType::Accreditation,
-            'decreeable_type' => $accreditation->decree()->getMorphClass(),
-            'release_date' => Carbon::create($request->input('release_date')),
-            'validity_date' => Carbon::create($request->input('due_date')),
-        ]));
-
-        // Upload File to Storage
-        UploadFileToStorage::run('decree/', $request->file('decree'), $request->get('decree_number').'.pdf');
+        foreach ($decreeInfo as $decree) {
+            AttachDecreeableToDecree::run($accreditation, DecreeData::from([
+                'code' => GenerateUniqueCode::run('DOC'),
+                'name' => $decree['filename'],
+                'file_path' => $decree['location'],
+                'size' => 2000,
+                'type' => DecreeType::Accreditation,
+                'decreeable_type' => $accreditation->decree()->getMorphClass(),
+                'release_date' => Carbon::create($request->input('release_date')),
+                'validity_date' => Carbon::create($request->input('due_date')),
+            ]));
+        }
 
         return redirect(route('accreditations.index'));
     }

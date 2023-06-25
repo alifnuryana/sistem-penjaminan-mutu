@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CreateAccreditationRequest extends FormRequest
 {
@@ -27,7 +28,8 @@ class CreateAccreditationRequest extends FormRequest
             'due_date' => ['required', 'date', 'after:today', 'after:release_date'],
             'release_date' => ['required', 'date', 'before:due_date'],
             'unit_id' => ['required', 'exists:units,id', 'uuid'],
-            'decree' => ['required', 'file', 'mimes:pdf', 'max:2048'],
+            'decree' => ['required'],
+            'decree.*' => ['required', Rule::filepond(['max:5000', 'mimes:pdf'])],
             'decree_number' => ['required', 'string', 'max:255'],
         ];
     }
