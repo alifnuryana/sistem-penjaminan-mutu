@@ -7,6 +7,7 @@ use App\Actions\StudyPrograms\AddNewStudyProgram;
 use App\Actions\Units\AttachUnitableToUnit;
 use App\Actions\Units\GetAllUnits;
 use App\Actions\Units\SearchAllUnit;
+use App\Actions\Utilities\FilePondUpload;
 use App\Actions\Utilities\GenerateUniqueCode;
 use App\Data\DecreeData;
 use App\Data\StudyProgramData;
@@ -20,7 +21,6 @@ use App\Models\University;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use RahulHaque\Filepond\Facades\Filepond;
 
 class DataUnitController extends Controller
 {
@@ -54,13 +54,8 @@ class DataUnitController extends Controller
      */
     public function store(CreateUnitRequest $request)
     {
-        // Old way
-        // Upload File To Storage
-        // UploadFileToStorage::run('decree/', $request->file('decree'), $request->get('decree_number').'.pdf');
+        $decreeInfo = FilePondUpload::run($request->decree, '/decrees/', $request->get('decree_number'));
 
-        $decreeInfo = Filepond::field($request->decree)->moveTo('/decrees/' . $request->get('decree_number'));
-
-        // Create StudyProgram
         $studyProgram = AddNewStudyProgram::run(StudyProgramData::from([
             'degree' => $request->get('degree'),
             'university_id' => University::first()->id,
