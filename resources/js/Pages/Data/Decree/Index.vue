@@ -117,7 +117,6 @@ import InputField from "../../../Components/InputField.vue";
 import MainTable from "../../../Components/MainTable.vue";
 import HeaderTable from "../../../Components/HeaderTable.vue";
 import FooterTable from "../../../Components/FooterTable.vue";
-import {Link} from "@inertiajs/vue3";
 
 const props = defineProps({
     decrees: {
