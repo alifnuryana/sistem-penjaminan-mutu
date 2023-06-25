@@ -12,7 +12,7 @@ const page = usePage();
         class="sticky top-0 inset-x-0 flex flex-wrap sm:justify-start sm:flex-nowrap z-[48] w-full bg-white border-b text-sm py-2.5 sm:py-4 lg:pl-64 dark:bg-gray-800 dark:border-gray-700">
         <nav class="flex basis-full items-center w-full mx-auto px-4 sm:px-6 md:px-8" aria-label="Global">
             <div class="mr-5 lg:mr-0 lg:hidden">
-                <Link as="h1" class="flex-none cursor-pointer text-xl font-semibold dark:text-white"
+                <Link class="flex-none cursor-pointer text-xl font-semibold dark:text-white"
                       :href="route('dashboard')"
                       aria-label="SPM Widyatama">SPM Widyatama
                 </Link>
@@ -41,7 +41,6 @@ const page = usePage();
                             <div class="mt-2 py-2 first:pt-0 last:pb-0">
                                 <Link :href="route('logout')"
                                       method="POST"
-                                      as="button"
                                       class="flex w-full items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300">
                                     <ArrowLeftOnRectangleIcon class="flex-none w-5 h-5"/>
                                     Logout
