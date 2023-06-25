@@ -77,11 +77,10 @@ class DataUnitController extends Controller
                 'type' => DecreeType::Establishment,
                 'size' => 2000,
                 'release_date' => Carbon::parse($request->get('release_date')),
-                'file_path' => $decree['location'],
+                'file_path' => $decree['basename'],
                 'decreeable_type' => StudyProgram::class,
             ]));
         }
-
         return redirect()->route('data.units.index')->with('success', 'Unit berhasil ditambahkan.');
     }
 
