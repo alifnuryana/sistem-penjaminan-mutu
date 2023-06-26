@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Models\Accreditation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -11,9 +12,11 @@ class NewAccreditationNotification extends Notification
 {
     use Queueable;
 
-    public function __construct()
+    public Accreditation $accreditation;
+
+    public function __construct(Accreditation $accreditation)
     {
-        //
+        $this->accreditation = $accreditation;
     }
 
     /**
@@ -28,9 +31,11 @@ class NewAccreditationNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->subject('Status Akreditasi Telah Aktif')
+            ->greeting('Selamat Pagi')
+            ->line("Status akreditasi {$this->accreditation->unit->name} telah aktif.")
+            ->line("Akreditasi berakhir pada {$this->accreditation->decree->validity_date->locale('id')->format('d F Y')}.")
+            ->line('Terima Kasih');
     }
 
     /**

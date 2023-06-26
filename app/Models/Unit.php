@@ -20,6 +20,11 @@ class Unit extends Model
         'unitable_type',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'code';
+    }
+
     public function unitable(): MorphTo
     {
         return $this->morphTo();

@@ -13,12 +13,17 @@ use App\Data\DecreeData;
 use App\Data\StudyProgramData;
 use App\Data\UnitData;
 use App\Enums\DecreeType;
+use App\Enums\NotificationStatus;
 use App\Http\Requests\CreateUnitRequest;
 use App\Http\Resources\UnitResource;
+use App\Models\Accreditation;
+use App\Models\Decree;
+use App\Models\Notification;
 use App\Models\StudyProgram;
 use App\Models\Unit;
 use App\Models\University;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -89,7 +94,19 @@ class DataUnitController extends Controller
      */
     public function show(Unit $unit)
     {
-        //
+        $unit->load(['unitable', 'accreditations']);
+
+        $accreditations = Accreditation::query()
+            ->with(['notifications', 'decree'])
+            ->where('unit_id', '=', $unit->id)
+            ->first();
+
+        $notifications = $accreditations->notifications()
+            ->with(['accreditation'])
+            ->orderBy('due_date')
+            ->get();
+
+        return Inertia::render('Data/Unit/Show', compact('unit', 'notifications'));
     }
 
     /**

@@ -22,6 +22,6 @@ class NotifyNewAccreditationListener
      */
     public function handle(AccreditationProcessedEvent $event): void
     {
-        $event->accreditation->unit->notify(new NewAccreditationNotification());
+        $event->accreditation->unit->notify(new NewAccreditationNotification($event->accreditation));
     }
 }
