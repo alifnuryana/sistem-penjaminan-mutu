@@ -17,6 +17,7 @@ use App\Enums\DecreeType;
 use App\Http\Requests\CreateAccreditationRequest;
 use App\Http\Resources\AccreditationResource;
 use App\Http\Resources\UnitResource;
+use App\Jobs\ProcessAccreditationJob;
 use App\Models\Accreditation;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -80,6 +81,8 @@ class AccreditationController extends Controller
                 'validity_date' => Carbon::create($request->input('due_date')),
             ]));
         }
+
+        ProcessAccreditationJob::dispatch($accreditation);
 
         return redirect(route('accreditations.index'));
     }
