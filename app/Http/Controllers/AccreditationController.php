@@ -40,6 +40,7 @@ class AccreditationController extends Controller
         // Get All Accreditation Sorted by Validity Date (Latest) + Paginated
         $accreditations = Accreditation::query()
             ->with(['decree', 'unit', 'unit.unitable'])
+            ->where('status', '=', AccreditationStatus::Active)
             ->when($keyword, function (Builder $query) use ($keyword) {
                 return $query->whereHas('unit', function (Builder $query) use ($keyword) {
                     return $query->where('name', 'ILIKE', '%' . $keyword . '%');
