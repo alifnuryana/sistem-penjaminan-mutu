@@ -15,6 +15,7 @@ use App\Data\UnitData;
 use App\Enums\DecreeType;
 use App\Enums\NotificationStatus;
 use App\Http\Requests\CreateUnitRequest;
+use App\Http\Requests\EditUnitRequest;
 use App\Http\Resources\UnitResource;
 use App\Models\Accreditation;
 use App\Models\Decree;
@@ -114,15 +115,32 @@ class DataUnitController extends Controller
      */
     public function edit(Unit $unit)
     {
-        //
+        $data = $unit->load('unitable');
+        return Inertia::render('Data/Unit/Edit', [
+            'data' => $data
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Unit $unit)
+    public function update(EditUnitRequest $request, Unit $unit)
     {
-        //
+        $unit->load('unitable');
+        $unit->name = $request->name;
+        $unit->email = $request->email;
+        $unit->unitable->degree = $request->degree;
+        if($unit->isDirty('email')){
+            $request->validate([
+                'email' => ['string', 'email', 'max:100', 'unique:units,email', 'ends_with:@widyatama.ac.id'],
+            ]);
+            $unit->save();
+            $unit->unitable->save();
+        }
+        $unit->save();
+        $unit->unitable->save();
+
+        return redirect()->route('data.units.show', $unit->code);
     }
 
     /**
