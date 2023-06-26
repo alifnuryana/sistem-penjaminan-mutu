@@ -1,10 +1,13 @@
 <script setup>
-import {computed, toRef} from "vue";
+import { computed, toRef } from "vue";
 
 const props = defineProps({
     unit: {
         type: Object,
         required: true,
+    },
+    accreditation: {
+        type: Object,
     },
 });
 
@@ -56,6 +59,16 @@ const isHasActiveAccreditation = computed(() => {
                     isHasActiveAccreditation
                         ? unit.accreditations[0].grade
                         : "-"
+                }}
+            </dd>
+        </div>
+        <div class="flex flex-col items-center justify-center">
+            <dt class="mb-2 text-xl font-extrabold">Masa Berlaku</dt>
+            <dd class="text-gray-500 dark:text-gray-400">
+                {{
+                    accreditation ? new Date(
+                        accreditation.decree.validity_date
+                    ).toLocaleDateString() : "-"
                 }}
             </dd>
         </div>

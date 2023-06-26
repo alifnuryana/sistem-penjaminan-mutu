@@ -96,22 +96,21 @@ class DataUnitController extends Controller
     {
         $unit->load(['unitable', 'accreditations']);
 
-        $accreditations = Accreditation::query()
+        $accreditation = Accreditation::query()
             ->with(['notifications', 'decree'])
             ->where('unit_id', '=', $unit->id)
             ->first();
 
         $notifications = null;
-        if ($accreditations !== null) {
+        if ($accreditation !== null) {
             $notifications = Notification::query()
                 ->with(['accreditation'])
-                ->where('accreditation_id', '=', $accreditations->id)
+                ->where('accreditation_id', '=', $accreditation->id)
                 ->orderBy('due_date')
                 ->get();
         }
 
-
-        return Inertia::render('Data/Unit/Show', compact('unit', 'notifications'));
+        return Inertia::render('Data/Unit/Show', compact('unit', 'notifications', 'accreditation'));
     }
 
     /**

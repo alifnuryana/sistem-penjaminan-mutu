@@ -20,6 +20,9 @@ const props = defineProps({
     notifications: {
         type: Array,
     },
+    accreditation: {
+        type: Object,
+    },
 });
 
 const unit = toRef(props, "unit");
@@ -29,10 +32,9 @@ const notificationScheduled = computed(() => {
     if (!notifications.value) {
         return [];
     }
-    return notifications.value
-        .filter((notification) => {
-            return notification.status === "Belum Terkirim";
-        });
+    return notifications.value.filter((notification) => {
+        return notification.status === "Belum Terkirim";
+    });
 });
 
 const notificationSended = computed(() => {
@@ -102,7 +104,7 @@ const notificationSended = computed(() => {
                 >
                     <div class="flex flex-wrap">
                         <PersonalFileBro class="max-w-sm mx-auto" />
-                        <UnitInfo :unit="unit" />
+                        <UnitInfo :unit="unit" :accreditation="accreditation" />
                     </div>
                 </div>
                 <!-- Informasi End -->
@@ -156,7 +158,10 @@ const notificationSended = computed(() => {
                                 </template>
                                 <template v-slot:body>
                                     <tr
-                                        v-for="notification in notificationScheduled.splice(0, 10)"
+                                        v-for="notification in notificationScheduled.splice(
+                                            0,
+                                            10
+                                        )"
                                         :key="notification.id"
                                     >
                                         <td class="h-px whitespace-nowrap">
@@ -202,7 +207,16 @@ const notificationSended = computed(() => {
                                                 <Link
                                                     as="button"
                                                     class="inline-flex items-center gap-x-1.5 text-sm text-blue-600 decoration-2 hover:underline font-medium"
-                                                    :href="route('data.units.sendRemainder', {unit: unit.code, notification: notification.id})"
+                                                    :href="
+                                                        route(
+                                                            'data.units.sendRemainder',
+                                                            {
+                                                                unit: unit.code,
+                                                                notification:
+                                                                    notification.id,
+                                                            }
+                                                        )
+                                                    "
                                                     method="POST"
                                                 >
                                                     Kirim Sekarang
@@ -226,7 +240,7 @@ const notificationSended = computed(() => {
                                 <p
                                     class="font-bold text-3xl text-green-400 dark:text-green-500"
                                 >
-                                    {{ notificationSended.length}}
+                                    {{ notificationSended.length }}
                                 </p>
                             </div>
                             <div
