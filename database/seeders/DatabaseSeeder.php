@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UnitSeeder::class,
+            AccreditationSeeder::class,
         ]);
     }
 }

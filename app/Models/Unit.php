@@ -3,14 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
 class Unit extends Model
 {
-    use HasFactory, HasUuids;
+    use HasUuids;
 
     protected $fillable = [
         'code',
@@ -20,12 +19,12 @@ class Unit extends Model
         'unitable_type',
     ];
 
-    public function unitable() : MorphTo
+    public function unitable(): MorphTo
     {
         return $this->morphTo();
     }
 
-    public function accreditations() : HasMany
+    public function accreditations(): HasMany
     {
         return $this->hasMany(Accreditation::class);
     }

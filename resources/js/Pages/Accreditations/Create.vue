@@ -1,0 +1,276 @@
+<template>
+    <AppLayout title="Catat Akreditasi">
+        <div class="max-w-5xl w-full">
+            <!-- Card -->
+            <div
+                class="bg-white rounded-xl border border-gray-200 p-4 sm:p-7 dark:bg-gray-800 dark:border-gray-700"
+            >
+                <form @submit.prevent="submit">
+                    <!-- Section -->
+                    <div
+                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 first:border-transparent border-gray-200 dark:border-gray-700"
+                    >
+                        <div class="col-span-12">
+                            <h2
+                                class="text-lg font-semibold text-gray-800 dark:text-gray-200"
+                            >
+                                Informasi Dasar
+                            </h2>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-3">
+                            <InputLabel for="name" class="mt-3">
+                                Kode Unit
+                            </InputLabel>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <InputField
+                                id="code"
+                                name="code"
+                                type="text"
+                                readonly
+                                :error="form.errors.code"
+                                v-model="form.code"
+                            />
+                            <InputError id="name" v-if="form.errors.code">
+                                {{ form.errors.code }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-3">
+                            <InputLabel for="name" class="mt-3">
+                                Nama Unit
+                            </InputLabel>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <select
+                                id="unit_id"
+                                v-model="form.unit_id"
+                                :disabled="units.length === 0"
+                                class="py-3 border-gray-200 px-4 block w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                            >
+                                <option selected></option>
+                                <option
+                                    v-for="unit in units"
+                                    :key="unit.id"
+                                    :value="unit.id"
+                                >
+                                    {{ unit.name }} - {{ unit.unitable.degree }}
+                                </option>
+                            </select>
+                            <p
+                                class="text-sm text-gray-500 mt-2"
+                                v-if="units.length === 0"
+                            >
+                                Seluruh unit telah memiliki akreditasi.
+                            </p>
+                            <InputError id="unit_id" v-if="form.errors.unit_id">
+                                {{ form.errors.unit_id }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-3">
+                            <InputLabel for="grade" class="mt-3">
+                                Hasil Akreditasi
+                            </InputLabel>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <select
+                                id="grade"
+                                v-model="form.grade"
+                                class="py-3 px-4 block border-gray-200 w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                            >
+                                <option selected></option>
+                                <option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>
+                                <option value="D">D</option>
+                                <option value="E">E</option>
+                            </select>
+                            <InputError id="grade" v-if="form.errors.grade">
+                                {{ form.errors.grade }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
+                    </div>
+                    <!-- End Section -->
+
+                    <!-- Section -->
+                    <div
+                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700"
+                    >
+                        <div class="col-span-12">
+                            <h2
+                                class="text-lg font-semibold text-gray-800 dark:text-gray-200"
+                            >
+                                SK Akreditasi
+                            </h2>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-3">
+                            <InputLabel for="decree" class="mt-3"
+                                >SK Akreditasi
+                            </InputLabel>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <label class="block">
+                                <FilePondUpload
+                                    name="decree"
+                                    accepted-file-types="application/pdf"
+                                    @init="handleFilePondInit"
+                                    @processfile="handleAddPondFiles"
+                                    @removefile="handleRemovePondFiles"
+                                />
+                            </label>
+                            <InputError id="decree" v-if="form.errors.decree">
+                                {{ form.errors.decree }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-3">
+                            <InputLabel for="decree_number" class="mt-3"
+                                >Nomor SK
+                            </InputLabel>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <InputField
+                                id="decree_number"
+                                name="decree_number"
+                                type="text"
+                                v-model="form.decree_number"
+                                :error="form.errors.decree_number"
+                            />
+                            <InputError
+                                id="decree_number"
+                                v-if="form.errors.decree_number"
+                            >
+                                {{ form.errors.decree_number }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-3">
+                            <InputLabel for="release_date" class="mt-3"
+                                >Penerbitan SK
+                            </InputLabel>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <InputField
+                                id="release_date"
+                                name="release_date"
+                                type="date"
+                                v-model="form.release_date"
+                            />
+                            <InputError
+                                id="degree"
+                                v-if="form.errors.release_date"
+                            >
+                                {{ form.errors.release_date }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-3">
+                            <InputLabel for="due_date" class="mt-3"
+                                >Masa Berlaku
+                            </InputLabel>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <!-- TODO : buat komponen baru untuk input tipe date biar bisa implementasi min and max date -->
+                            <InputField
+                                id="due_date"
+                                name="due_date"
+                                type="date"
+                                v-model="form.due_date"
+                            />
+                            <InputError id="degree" v-if="form.errors.due_date">
+                                {{ form.errors.due_date }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
+                    </div>
+                    <!-- End Section -->
+
+                    <div class="flex w-full justify-end">
+                        <PrimaryButton type="submit"> Catat</PrimaryButton>
+                    </div>
+                </form>
+            </div>
+            <!-- End Card -->
+        </div>
+        <!-- End Card Section -->
+    </AppLayout>
+</template>
+
+<script setup>
+import AppLayout from "../../Components/Layouts/AppLayout.vue";
+import PrimaryButton from "../../Components/PrimaryButton.vue";
+import InputLabel from "../../Components/InputLabel.vue";
+import InputError from "../../Components/InputError.vue";
+import InputField from "../../Components/InputField.vue";
+import { useForm } from "@inertiajs/vue3";
+import { useFilesPond } from "../../Composables/useFilesPond.js";
+import { toRef } from "vue";
+import FilePondUpload from "../../Components/FilePondUpload.vue";
+
+const props = defineProps({
+    code: {
+        type: String,
+        required: true,
+    },
+    units: {
+        type: Array,
+        required: true,
+    },
+});
+
+const form = useForm({
+    code: props.code,
+    grade: "",
+    due_date: "",
+    unit_id: "",
+    decree: [],
+    decree_number: "",
+    release_date: "",
+});
+
+const { handleFilePondInit, handleRemovePondFiles, handleAddPondFiles } =
+    useFilesPond(toRef(form, "decree"));
+
+function submit() {
+    form.transform((data) => {
+        return {
+            ...data,
+            decree: data.decree.map((item) => item.serverId),
+        };
+    }).post(route("accreditations.store"));
+}
+
+// const submit = function () {
+//     form.transform((data) => {
+//         return {
+//             ...data,
+//             decree: data.decree.map((item) => item.serverId),
+//         };
+//     }).post(route("data.units.store"));
+// };
+</script>

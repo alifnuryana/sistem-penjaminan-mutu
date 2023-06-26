@@ -2,14 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Actions\Decree\AttachDecreeableToDecree;
+use App\Actions\StudyPrograms\AddNewStudyProgram;
+use App\Actions\Units\AttachUnitableToUnit;
+use App\Actions\Units\GetAllUnits;
+use App\Actions\Units\SearchAllUnit;
+use App\Actions\Utilities\FilePondUpload;
+use App\Actions\Utilities\GenerateUniqueCode;
+use App\Data\DecreeData;
+use App\Data\StudyProgramData;
+use App\Data\UnitData;
+use App\Enums\DecreeType;
 use App\Http\Requests\CreateUnitRequest;
 use App\Http\Resources\UnitResource;
 use App\Models\StudyProgram;
 use App\Models\Unit;
 use App\Models\University;
-use App\Services\UtilityService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class DataUnitController extends Controller
@@ -19,15 +29,9 @@ class DataUnitController extends Controller
      */
     public function index(Request $request)
     {
-        $units = Unit::query()
-            ->when($request->input('keyword'), function ($query, $keyword) {
-                $keyword = ucwords($keyword);
-                return $query->where('name', 'like', "%{$keyword}%");
-            })
-            ->with([
-                'unitable',
-            ])->paginate(10)
-            ->withQueryString();
+        $units = $request->input('keyword')
+            ? SearchAllUnit::run(true, $request->input('keyword'))
+            : GetAllUnits::run(true);
 
         return Inertia::render('Data/Unit/Index', [
             'units' => UnitResource::collection($units),
@@ -38,10 +42,10 @@ class DataUnitController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(UtilityService $utilityService)
+    public function create()
     {
         return Inertia::render('Data/Unit/Create', [
-            'code' => $utilityService->generateNewCode('UNT'),
+            'code' => GenerateUniqueCode::run('UNIT'),
         ]);
     }
 
@@ -50,19 +54,33 @@ class DataUnitController extends Controller
      */
     public function store(CreateUnitRequest $request)
     {
-        $file = $request->file('decree');
-        $name = $file->hashName();
+        $decreeInfo = FilePondUpload::run($request->decree, '/decrees/', $request->get('decree_number'));
 
-        // TODO : simpan juga file ke dalam database decree
-        $upload = Storage::put('decree', $file);
-
-        $studyProgram = StudyProgram::query()->create([
+        $studyProgram = AddNewStudyProgram::run(StudyProgramData::from([
             'degree' => $request->get('degree'),
             'university_id' => University::first()->id,
-        ]);
+        ]));
 
-        $studyProgram->unit()->create($request->only('code', 'name', 'email'));
+        // Attach StudyProgram to Unit
+        AttachUnitableToUnit::run($studyProgram, UnitData::from([
+            'name' => $request->get('name'),
+            'code' => $request->get('code'),
+            'email' => $request->get('email'),
+            'unitable_type' => 'App\Models\StudyProgram',
+        ]));
 
+        // Attach StudyProgram to Decree
+        foreach ($decreeInfo as $decree) {
+            AttachDecreeableToDecree::run($studyProgram, DecreeData::from([
+                'code' => GenerateUniqueCode::run('SK'),
+                'name' => $decree['filename'],
+                'type' => DecreeType::Establishment,
+                'size' => 2000,
+                'release_date' => Carbon::parse($request->get('release_date')),
+                'file_path' => $decree['basename'],
+                'decreeable_type' => StudyProgram::class,
+            ]));
+        }
         return redirect()->route('data.units.index')->with('success', 'Unit berhasil ditambahkan.');
     }
 

@@ -17,7 +17,7 @@
                 </li>
 
                 <li>
-                    <Navlink href="#" :active="false">
+                    <Navlink :href="route('accreditations.index')" :active="route().current('accreditations.index')">
                         <DocumentIcon class="w-3.5 h-3.5"/>
                         Akreditasi
                     </Navlink>
@@ -33,7 +33,7 @@
                 <li class="hs-accordion" id="master-data-accordion">
                     <a
                         class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent text-sm text-slate-700 rounded-md hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-900 dark:text-slate-400 dark:hover:text-slate-300 dark:hs-accordion-active:text-white"
-                        href="javascript:;">
+                        href="javascript:">
                         <CircleStackIcon class="w-3.5 h-3.5"/>
                         Master Data
 
@@ -45,11 +45,17 @@
 
                     <div id="master-data-accordion-child"
                          class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                        <ul class="pt-2 pl-2">
+                        <ul class="pt-2 pl-2 space-y-1">
                             <li>
                                 <Navlink :href="route('data.units.index')"
                                          :active="route().current('data.units.index')">
                                     Unit
+                                </Navlink>
+                            </li>
+                            <li>
+                                <Navlink :href="route('data.decrees.index')"
+                                         :active="route().current('data.decrees.index')">
+                                    Dokumen SK
                                 </Navlink>
                             </li>
                         </ul>

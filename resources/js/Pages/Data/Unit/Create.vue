@@ -3,13 +3,18 @@
         <!-- Card Section -->
         <div class="max-w-5xl w-full">
             <!-- Card -->
-            <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
+            <div
+                class="bg-white rounded-xl border border-gray-200 p-4 sm:p-7 dark:bg-gray-800 dark:border-gray-700"
+            >
                 <form @submit.prevent="submit">
                     <!-- Section -->
                     <div
-                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
+                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 first:border-transparent border-gray-200 dark:border-gray-700"
+                    >
                         <div class="col-span-12">
-                            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                            <h2
+                                class="text-lg font-semibold text-gray-800 dark:text-gray-200"
+                            >
                                 Informasi Dasar
                             </h2>
                         </div>
@@ -23,8 +28,14 @@
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <InputField id="name" name="name" type="text" readonly :error="form.errors.code"
-                                        v-model="form.code"/>
+                            <InputField
+                                id="code"
+                                name="code"
+                                type="text"
+                                readonly
+                                :error="form.errors.code"
+                                v-model="form.code"
+                            />
                             <InputError id="name" v-if="form.errors.code">
                                 {{ form.errors.code }}
                             </InputError>
@@ -39,8 +50,13 @@
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <InputField id="name" name="name" type="text" :error="form.errors.name"
-                                        v-model="form.name"/>
+                            <InputField
+                                id="name"
+                                name="name"
+                                type="text"
+                                :error="form.errors.name"
+                                v-model="form.name"
+                            />
                             <InputError id="name" v-if="form.errors.name">
                                 {{ form.errors.name }}
                             </InputError>
@@ -55,8 +71,14 @@
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <InputField id="email" name="email" type="email" :error="form.errors.email"
-                                        v-model="form.email" placeholder="@widyatama.ac.id"/>
+                            <InputField
+                                id="email"
+                                name="email"
+                                type="email"
+                                :error="form.errors.email"
+                                v-model="form.email"
+                                placeholder="@widyatama.ac.id"
+                            />
                             <InputError id="email" v-if="form.errors.email">
                                 {{ form.errors.email }}
                             </InputError>
@@ -64,15 +86,18 @@
                         <!-- End Col -->
 
                         <div class="col-span-3">
-                            <InputLabel for="degree" class="mt-3">Jenjang</InputLabel>
+                            <InputLabel for="degree" class="mt-3"
+                                >Jenjang</InputLabel
+                            >
                         </div>
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <!-- TODO : jadikan select input sebagai komponen terpisah -->
-                            <select id="degree"
-                                    v-model="form.degree"
-                                    class="py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                            <select
+                                id="degree"
+                                v-model="form.degree"
+                                class="py-3 px-4 block border-gray-200 w-full rounded-md text-sm dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                            >
                                 <option selected></option>
                                 <option value="D3">D3</option>
                                 <option value="D4">D4</option>
@@ -90,30 +115,33 @@
 
                     <!-- Section -->
                     <div
-                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
+                        class="grid grid-cols-12 gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700"
+                    >
                         <div class="col-span-12">
-                            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                            <h2
+                                class="text-lg font-semibold text-gray-800 dark:text-gray-200"
+                            >
                                 SK
                             </h2>
                         </div>
                         <!-- End Col -->
 
                         <div class="col-span-3">
-                            <InputLabel for="decree" class="mt-3">SK Pendirian</InputLabel>
+                            <InputLabel for="decree" class="mt-3"
+                                >SK Pendirian</InputLabel
+                            >
                         </div>
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <!-- TODO : jadikan file input sebagai komponen terpisah -->
                             <label class="block">
-                                <input type="file" id="decree" name="decree"
-                                       @input="form.decree = $event.target.files[0]" class="block w-full text-sm text-gray-500
-                                  file:mr-4 file:py-2 file:px-4
-                                  file:rounded-md file:border-0
-                                  file:text-sm file:font-semibold
-                                  file:bg-blue-500 file:text-white
-                                  hover:file:bg-blue-600
-                                "/>
+                                <FilePondUpload
+                                    name="decree"
+                                    accepted-file-types="application/pdf"
+                                    @init="handleFilePondInit"
+                                    @processfile="handleAddPondFiles"
+                                    @removefile="handleRemovePondFiles"
+                                />
                             </label>
                             <InputError id="decree" v-if="form.errors.decree">
                                 {{ form.errors.decree }}
@@ -122,15 +150,48 @@
                         <!-- End Col -->
 
                         <div class="col-span-3">
-                            <InputLabel for="decree_number" class="mt-3">Nomor SK</InputLabel>
+                            <InputLabel for="decree_number" class="mt-3"
+                                >Nomor SK</InputLabel
+                            >
                         </div>
                         <!-- End Col -->
 
                         <div class="col-span-9">
-                            <InputField id="decree_number" name="decree_number" type="text" v-model="form.decree_number"
-                                        :error="form.errors.decree_number"/>
-                            <InputError id="decree_number" v-if="form.errors.decree_number">
+                            <InputField
+                                id="decree_number"
+                                name="decree_number"
+                                type="text"
+                                v-model="form.decree_number"
+                                :error="form.errors.decree_number"
+                            />
+                            <InputError
+                                id="decree_number"
+                                v-if="form.errors.decree_number"
+                            >
                                 {{ form.errors.decree_number }}
+                            </InputError>
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-3">
+                            <InputLabel for="release_date" class="mt-3"
+                                >Penerbitan SK</InputLabel
+                            >
+                        </div>
+                        <!-- End Col -->
+
+                        <div class="col-span-9">
+                            <InputField
+                                id="release_date"
+                                name="release_date"
+                                type="date"
+                                v-model="form.release_date"
+                            />
+                            <InputError
+                                id="degree"
+                                v-if="form.errors.release_date"
+                            >
+                                {{ form.errors.release_date }}
                             </InputError>
                         </div>
                         <!-- End Col -->
@@ -138,9 +199,7 @@
                     <!-- End Section -->
 
                     <div class="flex w-full justify-end">
-                        <PrimaryButton type="submit">
-                            Submit
-                        </PrimaryButton>
+                        <PrimaryButton type="submit"> Submit </PrimaryButton>
                     </div>
                 </form>
             </div>
@@ -156,13 +215,17 @@ import InputLabel from "../../../Components/InputLabel.vue";
 import InputField from "../../../Components/InputField.vue";
 import InputError from "../../../Components/InputError.vue";
 import PrimaryButton from "../../../Components/PrimaryButton.vue";
-import {useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
+
+import { toRef } from "vue";
+import { useFilesPond } from "../../../Composables/useFilesPond.js";
+import FilePondUpload from "../../../Components/FilePondUpload.vue";
 
 const props = defineProps({
     code: {
         type: String,
         required: true,
-    }
+    },
 });
 
 const form = useForm({
@@ -171,10 +234,19 @@ const form = useForm({
     email: "",
     degree: "",
     decree_number: "",
-    decree: "",
+    decree: [],
+    release_date: "",
 });
 
+const { handleFilePondInit, handleAddPondFiles, handleRemovePondFiles } =
+    useFilesPond(toRef(form, "decree"));
+
 const submit = function () {
-    form.post(route('data.units.store'))
+    form.transform((data) => {
+        return {
+            ...data,
+            decree: data.decree.map((item) => item.serverId),
+        };
+    }).post(route("data.units.store"));
 };
 </script>
