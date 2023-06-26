@@ -42,7 +42,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', false),
+    'debug' => (bool)env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -168,6 +168,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
+        App\Providers\HorizonServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
     ])->toArray(),
 
@@ -185,5 +186,46 @@ return [
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
     ])->toArray(),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Due Dates
+    |--------------------------------------------------------------------------
+    */
+
+    'due_dates' => [
+        7,
+        15,
+        30,
+        60,
+        90,
+        120,
+        150,
+        180,
+        210,
+        240,
+        270,
+        300,
+        330,
+        360,
+        390,
+        420,
+        450,
+        480,
+        510,
+        540,
+        570,
+        600,
+        630,
+        660,
+        690,
+        720,
+        750,
+        780,
+        810,
+        840,
+        870,
+    ],
+
 
 ];
