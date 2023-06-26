@@ -15,6 +15,7 @@ class LoadSamplePdf
     public function handle(): void
     {
         $samplePdfPath = database_path('seeders/files/sample.pdf');
-        Storage::put('/decree/sample.pdf', file_get_contents($samplePdfPath));
+        $fileContent = \File::get($samplePdfPath);
+        Storage::disk('public')->put('decrees/sample.pdf', $fileContent);
     }
 }
