@@ -19,7 +19,6 @@ const props = defineProps({
     },
     notifications: {
         type: Array,
-        required: true,
     },
 });
 
@@ -27,6 +26,9 @@ const unit = toRef(props, "unit");
 const notifications = toRef(props, "notifications");
 
 const notificationScheduled = computed(() => {
+    if (!notifications.value) {
+        return [];
+    }
     return notifications.value
         .filter((notification) => {
             return notification.status === "Belum Terkirim";
@@ -34,6 +36,9 @@ const notificationScheduled = computed(() => {
 });
 
 const notificationSended = computed(() => {
+    if (!notifications.value) {
+        return [];
+    }
     return notifications.value.filter((notification) => {
         return notification.status === "Terkirim";
     });
@@ -95,8 +100,10 @@ const notificationSended = computed(() => {
                     role="tabpanel"
                     aria-labelledby="bar-with-underline-item-1"
                 >
-                    <PersonalFileBro class="max-w-sm mx-auto" />
-                    <UnitInfo :unit="unit" />
+                    <div class="flex flex-wrap">
+                        <PersonalFileBro class="max-w-sm mx-auto" />
+                        <UnitInfo :unit="unit" />
+                    </div>
                 </div>
                 <!-- Informasi End -->
                 <!-- Notofikasi Start -->

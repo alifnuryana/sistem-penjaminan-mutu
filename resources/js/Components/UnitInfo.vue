@@ -22,7 +22,7 @@ const isHasActiveAccreditation = computed(() => {
 
 <template>
     <dl
-        class="grid grid-cols-1 text-center gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-5 dark:text-white sm:p-8"
+        class="grid grid-cols-1 text-center gap-8 p-4 mx-auto text-gray-900 xl:grid-cols-2 dark:text-white sm:p-8"
     >
         <div class="flex flex-col items-center justify-center">
             <dt class="mb-2 text-xl font-extrabold">Kode Unit</dt>

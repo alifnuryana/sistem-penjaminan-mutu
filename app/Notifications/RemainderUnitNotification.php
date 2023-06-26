@@ -30,10 +30,9 @@ class RemainderUnitNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Masa Berlaku Akreditasi')
+            ->subject('Pemberitahuan Masa Berlaku Akreditasi')
             ->greeting($this->getGreeting())
-            ->line("Status akreditasi anda akan berakhir pada {$this->accreditation->decree->validity_date->locale('id')->format('d F Y')}.")
-            ->line('Terima Kasih');
+            ->line("Status akreditasi anda akan berakhir pada {$this->accreditation->decree->validity_date->locale('id')->format('d F Y')}.");
     }
 
     /**

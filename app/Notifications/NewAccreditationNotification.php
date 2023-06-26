@@ -31,11 +31,10 @@ class NewAccreditationNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->subject('Status Akreditasi Telah Aktif')
+            ->subject('Pemberitahuan Status Akreditasi')
             ->greeting('Selamat Pagi')
             ->line("Status akreditasi {$this->accreditation->unit->name} telah aktif.")
-            ->line("Akreditasi berakhir pada {$this->accreditation->decree->validity_date->locale('id')->format('d F Y')}.")
-            ->line('Terima Kasih');
+            ->line("Akreditasi berakhir pada {$this->accreditation->decree->validity_date->locale('id')->format('d F Y')}.");
     }
 
     /**
