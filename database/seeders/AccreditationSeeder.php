@@ -31,7 +31,7 @@ class AccreditationSeeder extends Seeder
                 'code' => GenerateUniqueCode::run('DOC', 10),
                 'name' => GenerateMailNumber::run(),
                 'file_path' => 'sample.pdf',
-                'size' => Storage::size('decree/sample.pdf'),
+                'size' => Storage::size('public/decrees/sample.pdf'),
                 'type' => DecreeType::Accreditation,
                 'decreeable_type' => $accreditation->decree()->getMorphClass(),
                 'release_date' => Carbon::make(fake()->dateTimeBetween('-4 years', '-1 years')),
