@@ -21,8 +21,8 @@ class SendUnitRemainderController extends Controller
             ])
             ->first();
 
-        ProcessRemainderAccreditationJob::dispatch($accreditation, $notification);
+        ProcessRemainderAccreditationJob::dispatchSync($accreditation, $notification);
 
-        return redirect(route('dashboard'));
+        return redirect(route('data.units.show', $unit->code));
     }
 }

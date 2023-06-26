@@ -102,10 +102,15 @@ class DataUnitController extends Controller
             ->where('unit_id', '=', $unit->id)
             ->first();
 
-        $notifications = $accreditations->notifications()
-            ->with(['accreditation'])
-            ->orderBy('due_date')
-            ->get();
+        $notifications = null;
+        if ($accreditations !== null) {
+            $notifications = Notification::query()
+                ->with(['accreditation'])
+                ->where('accreditation_id', '=', $accreditations->id)
+                ->orderBy('due_date')
+                ->get();
+        }
+
 
         return Inertia::render('Data/Unit/Show', compact('unit', 'notifications'));
     }
