@@ -63,7 +63,7 @@ watch(filter, (value) => {
 
 const deleteCheckedNotification = function () {
     if (confirm("Apakah kamu yakin ingin menghapus notifikasi init?")) {
-        router.visit(route("accreditations.destroys"), {
+        router.visit(route("data.notifications.destroys"), {
             data: {
                 ids: checkedData.value,
             },
@@ -370,17 +370,30 @@ const deleteCheckedNotification = function () {
                                                         'Terkirim'
                                                     "
                                                     class="bg-green-100 text-green-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300"
-                                                >Terkirim</span
+                                                    >Terkirim</span
                                                 >
                                             </div>
                                         </td>
                                         <td class="h-px w-px whitespace-nowrap">
                                             <div class="px-6 py-1.5">
                                                 <Link
-                                                    href="#"
+                                                    as="button"
+                                                    :href="
+                                                        route(
+                                                            'data.units.sendRemainder',
+                                                            {
+                                                                unit: notification
+                                                                    .accreditation
+                                                                    .unit.code,
+                                                                notification:
+                                                                    notification.id,
+                                                            }
+                                                        )
+                                                    "
+                                                    method="POST"
                                                     class="inline-flex items-center gap-x-1.5 text-sm text-blue-600 decoration-2 hover:underline font-medium"
                                                 >
-                                                    Detail
+                                                    Kirim Sekarang
                                                 </Link>
                                             </div>
                                         </td>
