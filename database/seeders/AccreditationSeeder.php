@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Actions\Decree\AttachDecreeableToDecree;
+use App\Actions\Notifications\CreateNewNotification;
 use App\Actions\Utilities\GenerateMailNumber;
 use App\Actions\Utilities\GenerateUniqueCode;
 use App\Data\DecreeData;
@@ -31,7 +32,7 @@ class AccreditationSeeder extends Seeder
                 'code' => GenerateUniqueCode::run('DOC', 10),
                 'name' => GenerateMailNumber::run(),
                 'file_path' => 'sample.pdf',
-                'size' => Storage::size('decree/sample.pdf'),
+                'size' => Storage::size('public/decrees/sample.pdf'),
                 'type' => DecreeType::Accreditation,
                 'decreeable_type' => $accreditation->decree()->getMorphClass(),
                 'release_date' => Carbon::make(fake()->dateTimeBetween('-4 years', '-1 years')),
@@ -39,6 +40,48 @@ class AccreditationSeeder extends Seeder
             ]);
 
             AttachDecreeableToDecree::run($accreditation, $data);
+
+            $dataDueDate = [
+                7,
+                15,
+                30,
+                60,
+                90,
+                120,
+                150,
+                180,
+                210,
+                240,
+                270,
+                300,
+                330,
+                360,
+                390,
+                420,
+                450,
+                480,
+                510,
+                540,
+                570,
+                600,
+                630,
+                660,
+                690,
+                720,
+                750,
+                780,
+                810,
+                840,
+                870,
+            ];
+
+            foreach ($dataDueDate as $dueDate) {
+                if ($accreditation->decree->validity_date->subDays($dueDate)->isBefore(now())) {
+                    continue;
+                } else {
+                    CreateNewNotification::run($accreditation, $accreditation->decree->validity_date->subDays($dueDate));
+                }
+            }
         });
     }
 }

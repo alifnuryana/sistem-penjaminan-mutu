@@ -12,13 +12,19 @@ use App\Actions\Utilities\GenerateUniqueCode;
 use App\Data\DecreeData;
 use App\Data\StudyProgramData;
 use App\Data\UnitData;
+use App\Enums\AccreditationStatus;
 use App\Enums\DecreeType;
+use App\Enums\NotificationStatus;
 use App\Http\Requests\CreateUnitRequest;
 use App\Http\Resources\UnitResource;
+use App\Models\Accreditation;
+use App\Models\Decree;
+use App\Models\Notification;
 use App\Models\StudyProgram;
 use App\Models\Unit;
 use App\Models\University;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -89,7 +95,29 @@ class DataUnitController extends Controller
      */
     public function show(Unit $unit)
     {
-        //
+        $unit->load(['unitable', 'accreditations']);
+
+        $accreditation = Accreditation::query()
+            ->with(['notifications', 'decree'])
+            ->where([
+                ['unit_id', '=', $unit->id],
+                ['status', '=', AccreditationStatus::Active]
+            ])
+            ->first();
+
+        $notifications = Notification::query()
+            ->when($accreditation !== null, function (Builder $query) use ($accreditation) {
+                $query->where('accreditation_id', '=', $accreditation->id);
+            })
+            ->when($accreditation === null, function (Builder $query) use ($unit) {
+                $query->whereHas('accreditation', function (Builder $query) use ($unit) {
+                    $query->where('unit_id', '=', $unit->id);
+                });
+            })
+            ->orderBy('due_date')
+            ->get();
+
+        return Inertia::render('Data/Unit/Show', compact('unit', 'notifications', 'accreditation'));
     }
 
     /**

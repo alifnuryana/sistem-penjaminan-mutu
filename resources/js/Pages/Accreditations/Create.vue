@@ -233,7 +233,7 @@ import { toRef } from "vue";
 import FilePondUpload from "../../Components/FilePondUpload.vue";
 
 const props = defineProps({
-    code: {
+    newCode: {
         type: String,
         required: true,
     },
@@ -244,7 +244,7 @@ const props = defineProps({
 });
 
 const form = useForm({
-    code: props.code,
+    code: props.newCode,
     grade: "",
     due_date: "",
     unit_id: "",
@@ -264,13 +264,4 @@ function submit() {
         };
     }).post(route("accreditations.store"));
 }
-
-// const submit = function () {
-//     form.transform((data) => {
-//         return {
-//             ...data,
-//             decree: data.decree.map((item) => item.serverId),
-//         };
-//     }).post(route("data.units.store"));
-// };
 </script>

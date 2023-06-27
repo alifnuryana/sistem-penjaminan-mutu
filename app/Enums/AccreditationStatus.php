@@ -4,6 +4,6 @@ namespace App\Enums;
 
 enum AccreditationStatus: string
 {
-    case Active = 'active';
-    case Inactive = 'inactive';
+    case Active = 'Aktif';
+    case Inactive = 'Tidak Aktif';
 }

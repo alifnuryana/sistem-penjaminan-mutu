@@ -6,10 +6,11 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Notifications\Notifiable;
 
 class Unit extends Model
 {
-    use HasUuids;
+    use HasUuids, Notifiable;
 
     protected $fillable = [
         'code',
@@ -18,6 +19,11 @@ class Unit extends Model
         'unitable_id',
         'unitable_type',
     ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'code';
+    }
 
     public function unitable(): MorphTo
     {
