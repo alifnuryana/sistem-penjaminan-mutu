@@ -8,15 +8,12 @@ import {
 defineProps({
     from: {
         required: true,
-        type: Number,
     },
     to: {
         required: true,
-        type: Number,
     },
     total: {
         required: true,
-        type: Number,
     },
     nextPageUrl: {
         required: true,
