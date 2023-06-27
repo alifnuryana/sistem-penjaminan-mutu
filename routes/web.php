@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AccreditationController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DataIndexController;
 use App\Http\Controllers\DataUnitController;
 use App\Http\Controllers\DetailDecreeController;
@@ -18,9 +19,7 @@ use Inertia\Inertia;
 Route::redirect('/', RouteServiceProvider::HOME);
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+    Route::get('dashboard', DashboardController::class)->name('dashboard');
 
     Route::resource('accreditations', AccreditationController::class)->only('index', 'create', 'store');
     Route::delete('accreditations/destroys', MultipleDeleteAccreditationController::class)->name('accreditations.destroys');
