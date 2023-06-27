@@ -62,7 +62,7 @@ watch(filter, (value) => {
 });
 
 const deleteCheckedNotification = function () {
-    if (confirm("Apakah kamu yakin ingin menghapus notifikasi init?")) {
+    if (confirm("Apakah kamu yakin ingin menghapus notifikasi ini?")) {
         router.visit(route("data.notifications.destroys"), {
             data: {
                 ids: checkedData.value,
