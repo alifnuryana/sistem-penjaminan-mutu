@@ -25,7 +25,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('data')->as('data.')->group(function () {
         Route::get('/', DataIndexController::class)->name('index');
-        Route::resource('units', DataUnitController::class)->only('index', 'create', 'store', 'show');
+        Route::resource('units', DataUnitController::class)->only('index', 'create', 'store', 'show', 'edit', 'update');
         Route::delete('units/destroys', MultipleDeleteUnitController::class)->name('units.destroys');
         Route::post('/units/{unit}/sendRemainder/{notification}', SendUnitRemainderController::class)->name('units.sendRemainder');
         Route::get('/decrees', IndexDecreeController::class)->name('decrees.index');

@@ -52,17 +52,28 @@ const notificationSended = computed(() => {
         <div
             class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:text-gray-400 dark:bg-slate-900 dark:border-gray-700 p-5"
         >
-            <div>
-                <h2
-                    class="text-xl font-semibold text-gray-800 dark:text-gray-200"
-                >
-                    Detail {{ unit.name }}
-                    {{ unit.unitable.degree }}
-                </h2>
-                <p class="text-sm text-gray-600 mt-1 dark:text-gray-400">
-                    Informasi mengenai {{ unit.name }}
-                    {{ unit.unitable.degree }}
-                </p>
+            <div class="flex justify-between items-center">
+                <div>
+                    <h2
+                        class="text-xl font-semibold text-gray-800 dark:text-gray-200"
+                    >
+                        Detail {{ unit.name }}
+                        {{ unit.unitable.degree }}
+                    </h2>
+                    <p class="text-sm text-gray-600 mt-1 dark:text-gray-400">
+                        Informasi mengenai {{ unit.name }}
+                        {{ unit.unitable.degree }}
+                    </p>
+                </div>
+                <div>
+                    <Link
+                        as="button"
+                        class="py-2 px-5 inline-flex justify-center items-center rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                        :href="route('data.units.edit', unit.code)"
+                    >
+                        Edit
+                    </Link>
+                </div>
             </div>
 
             <!-- Tabs Header Start -->
