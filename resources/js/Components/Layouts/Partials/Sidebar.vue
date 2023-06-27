@@ -24,7 +24,7 @@
                 </li>
 
                 <li>
-                    <Navlink href="#" :active="false">
+                    <Navlink :href="route('data.notifications.index')" :active="route().current('data.notifications.index')">
                         <BellAlertIcon class="w-3.5 h-3.5"/>
                         Notifikasi
                     </Navlink>
